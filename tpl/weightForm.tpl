@@ -22,10 +22,11 @@
 *  @license    http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 *  International Registered Trademark & Property of PrestaShop SA
 *}
-
-<br/>
-<fieldset style="width:400px">
-  <legend><img src="../img/admin/delivery.gif" />{l s='Shipping information'}</legend>
+<div class="tab-content panel">
+	<!-- Tab TNT -->
+	<div id="tnt" class="tab-pane active">
+		<!-- History of TNT -->
+			<legend><i class="icon-truck "></i> {l s='TNT Shipping information'}</legend>
   <form action="{$var.currentIndex}&view{$var.table}&token={$var.token}" method="post" style="margin-top:10px;">
 {l s='Your package must be over 0.1 KG and' mod='tntcarrier'} {$weight} {l s='KG' mod='tntcarrier'}<br/><br/>
 {foreach from=$productWeight item=product}
@@ -34,4 +35,5 @@
 <br/>
 <input type="submit" value="{l s='Modify' mod='tntcarrier'}" class="button" />
   </form>
-</fieldset>
+</div>
+</div>

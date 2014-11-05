@@ -192,3 +192,9 @@ $_MODULE['<{tntcarrier}prestashop>weightform_d66bafd92f698ed7fac400597d08db9f'] 
 $_MODULE['<{tntcarrier}prestashop>weightform_56d721ccadb8bbfd8b47390d82a6ea4b'] = 'Kg';
 $_MODULE['<{tntcarrier}prestashop>weightform_06752dfc0286b9fa9e541f204f32f201'] = 'Poids (Kg)';
 $_MODULE['<{tntcarrier}prestashop>weightform_7f090bbab1cc7f9c08bf4e54d932d3c0'] = 'Modifier';
+$_MODULE['<{tntcarrier}prestashop>tntcarrier_0d1330e12d3a2a5226f64785360edafd'] = 'Vous pouvez ajouter des frais supplémentaires en fonction du poids du colis dans la configuration des transporteurs (Livraison -> Transporteurs)';
+$_MODULE['<{tntcarrier}prestashop>shippingnumber_b2c9869970418e42da9006f26f3f545d'] = 'Voir Fichier PDF';
+$_MODULE['<{tntcarrier}prestashop>shippingnumber_6d1f4606fb24615fb692914c9522c6bb'] = 'Informations de livraison TNT';
+$_MODULE['<{tntcarrier}prestashop>weightform_6d1f4606fb24615fb692914c9522c6bb'] = 'Informations de livraison TNT';
+$_MODULE['<{tntcarrier}prestashop>follow_6d1f4606fb24615fb692914c9522c6bb'] = 'Informations de livraison TNT';
+$_MODULE['<{tntcarrier}prestashop>tntcarrier_ceef7571804a0bf1351635c2c69c4823'] = 'Vous devez remplir votre adresse dans la configuration du module TNT';

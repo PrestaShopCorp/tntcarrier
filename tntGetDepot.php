@@ -122,7 +122,7 @@ else
 							<td></td>
 							<td></td>
 							<td></td>
-							<td class='tntRCblanc'></td>
+							<td class='tntRCblanc' colspan='2'></td>
 							</tr>";
 					}
 				else
@@ -140,7 +140,7 @@ else
 							<td></td>
 							<td></td>
 							<td></td>
-							<td class='tntRCblanc'></td>
+							<td class='tntRCblanc' colspan='2'></td>
 							</tr>";
 			echo "
 				</table>

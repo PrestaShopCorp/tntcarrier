@@ -23,9 +23,11 @@
 *  International Registered Trademark & Property of PrestaShop SA
 *}
 
-<br/>
-<fieldset style="width:400px">
-	<legend><img src="../img/admin/delivery.gif" />{l s='Shipping information'}</legend>
+<div class="tab-content panel">
+	<!-- Tab TNT -->
+	<div id="tnt" class="tab-pane active">
+		<!-- History of TNT -->
+			<legend><i class="icon-truck "></i> {l s='TNT Shipping information'}</legend>
 	{if isset($weight)}
 	{l s='Each package must be at' mod='tntcarrier'} {$weight} {l s='Kg' mod='tntcarrier'}.<br/><br/>
 	{/if}
@@ -164,4 +166,5 @@
 	</div>
 	<input type="submit" value="{l s='get a shipping number' mod='tntcarrier'}"/>
 	</form>
-</fieldset>
+</div>
+</div>

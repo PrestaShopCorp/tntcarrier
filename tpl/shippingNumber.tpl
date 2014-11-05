@@ -23,32 +23,40 @@
 *  International Registered Trademark & Property of PrestaShop SA
 *}
 
-<br/>
-<fieldset style="width:400px">
-			<legend><img src="../img/admin/delivery.gif" />{l s='Shipping information'}</legend>
-			{if isset($weight)}
-			{l s='Please make sure each package weight a maximum of' mod='tntcarrier'} {$weight} {l s='Kg' mod='tntcarrier'}.<br/><br/>
-			{l s='In order to have a shipping number, please change the order\'s status to Shipped' mod='tntcarrier'}<br/><br/>
-			{/if}
-			{$var.error}
-			{if $var.shipping_numbers && $var.sticker}
-			<span style='font-weight:bold'>{l s='ShippingNumber' mod='tntcarrier'} : </span>
-			<div style="text-align:right">
-			{foreach from=$var.shipping_numbers item=v}
-			{if $v.shipping_number}
-			{$v.shipping_number}<br/>
-			{/if}
-			{/foreach}
-			</div>
-			<span style='font-weight:bold'>{l s='Sticker' mod='tntcarrier'} : </span><a style="color:blue" href="{$var.sticker}">{l s="PDF File"}</a><br/>
-			<span style='font-weight:bold'>{l s='Expedition' mod='tntcarrier'} : </span>{$var.date}<br/><br/>
-			<span style='font-weight:bold'>{l s='Shipping address' mod='tntcarrier'} :</span><br/>
-			{$var.place}<br/><br/>
-			<!--<span style='font-weight:bold'>{l s='Customer address' mod='tntcarrier'} :</span><br/>
-			{$var.customer}<br/><br/>-->
-			{if $var.relay != ''}
-			<span style='font-weight:bold'>{l s='Relay Package address' mod='tntcarrier'} :</span><br/>
-			{$var.relay}
-			{/if}
-			{/if}
-</fieldset>
+<div class="tab-content panel">
+	<!-- Tab TNT -->
+	<div id="tnt" class="tab-pane active">
+		<!-- History of TNT -->
+			<legend><i class="icon-truck "></i> {l s='TNT Shipping information'}</legend>
+				{if isset($weight)}
+				{l s='Please make sure each package weight a maximum of' mod='tntcarrier'} {$weight} {l s='Kg' mod='tntcarrier'}.<br/><br/>
+				{l s='In order to have a shipping number, please change the order\'s status to Shipped' mod='tntcarrier'}<br/><br/>
+				{/if}
+				{$var.error}
+				{if $var.shipping_numbers && $var.sticker}
+				<span style='font-weight:bold'>{l s='ShippingNumber' mod='tntcarrier'} : </span>
+				<div style="text-align:left">
+					{foreach from=$var.shipping_numbers item=v}
+					{if $v.shipping_number}
+					{$v.shipping_number}<br/>
+					{/if}
+					{/foreach}
+				</div>
+				<br/>
+				<span style='font-weight:bold'>{l s='Sticker' mod='tntcarrier'} : </span>
+					<a target="_blank" href="{$var.sticker}" class="btn btn-default">
+							<i class="icon-truck"></i>
+							{l s='See PDF File' mod='tntcarrier'}
+						</a><br/><br/>
+				<span style='font-weight:bold'>{l s='Expedition' mod='tntcarrier'} : </span>{$var.date}<br/><br/>
+				<span style='font-weight:bold'>{l s='Shipping address' mod='tntcarrier'} :</span><br/>
+				{$var.place}<br/><br/>
+				<!--<span style='font-weight:bold'>{l s='Customer address' mod='tntcarrier'} :</span><br/>
+				{$var.customer}<br/><br/>-->
+				{if $var.relay != ''}
+				<span style='font-weight:bold'>{l s='Relay Package address' mod='tntcarrier'} :</span><br/>
+				{$var.relay}
+				{/if}
+				{/if}
+	</div>
+</div>

@@ -23,9 +23,11 @@
 *  International Registered Trademark & Property of PrestaShop SA
 *}
 
-<br/>
-<fieldset style="width:400px">
-  <legend><img src="../img/admin/delivery.gif" alt="" />{l s='Shipping information'}</legend>
+<div class="tab-content panel">
+	<!-- Tab TNT -->
+	<div id="tnt" class="tab-pane active">
+		<!-- History of TNT -->
+			<legend><i class="icon-truck "></i> {l s='TNT Shipping information'}</legend>
   {$var.error}
   <br/>
   {if isset($var.errorFriendly) && $var.errorFriendly != ''}
@@ -39,4 +41,5 @@
 <input type="submit" value="{l s='Modify' mod='tntcarrier'}" class="button" />
     {/if}
   </form>
-</fieldset>
+</div>
+</div>
