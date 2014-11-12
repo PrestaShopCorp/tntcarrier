@@ -440,7 +440,7 @@ class TntCarrier extends CarrierModule
 			$id = Tools::getValue($cat);
 			Db::getInstance()->Execute('DELETE FROM `'._DB_PREFIX_.'tnt_carrier_'.$this->bqSQL($cat).'` WHERE `id_'.$this->bqSQL($cat).'` = '.(int)$id.'');
 		}
-		if(_PS_VERSION_ < 1.6)
+		if (version_compare(_PS_VERSION_, '1.6', '<'))
 		{
 			$html = '
 			<a href="index.php?tab='.htmlentities(Tools::getValue('tab')).'&configure='.htmlentities(Tools::getValue('configure')).'&token='.htmlentities(Tools::getValue('token')).'&tab_module='.htmlentities(Tools::getValue('tab_module')).'&module_name='.htmlentities(Tools::getValue('module_name')).'&id_tab=3&section='.htmlentities($cat).'&action=new">
@@ -539,7 +539,7 @@ class TntCarrier extends CarrierModule
 
 		$html = '';
 
-		if(_PS_VERSION_ < 1.6)
+		if (version_compare(_PS_VERSION_, '1.6', '<'))
 		{
 			$html .= '
 			<form action="index.php?tab='.htmlentities(Tools::getValue('tab')).'&configure='.htmlentities(Tools::getValue('configure')).'&token='.htmlentities(Tools::getValue('token')).'&tab_module='.htmlentities(Tools::getValue('tab_module')).'&module_name='.htmlentities(Tools::getValue('module_name')).'&id_tab=3&section='.$cat.'&action=new" method="post" class="form" id="configForm'.$cat.'">
@@ -977,14 +977,16 @@ class TntCarrier extends CarrierModule
 
 		$output = null;
 		if (isset($this->context) && method_exists($this->context->controller, 'addJS'))
-		{
+		{	
 			$this->context->controller->addJS('http://maps.google.com/maps/api/js?sensor=true');
 			$this->context->controller->addJS($this->_path.'js/relais.js');
 			$this->context->controller->addJS($this->_path.'js/jquery-ui-1.8.10.custom.min.js');
+			$this->context->controller->addCss($this->_path.'css/tntRelaisColis.css');
 		}
 		else
 			$smarty->assign('js_include', true);
-			
+		
+
 		return $output.$this->display(__FILE__, 'tpl/relaisColis.tpl');
 	}
 

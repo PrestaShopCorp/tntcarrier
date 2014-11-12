@@ -1,0 +1,71 @@
+/* Inline Style */
+#mobilenumber{
+	float:left;
+	margin-top:10px;
+	text-align:left;
+}
+#mobilenumber hr{
+ border:none;
+ margin-bottom:4px;
+}
+
+h3.descr{
+	color:black;
+	font-size: 18px; 
+}
+
+#tntcp{
+	 text-align:left;
+	 padding-bottom:10px;
+} 
+
+.choixrelais{
+	font-size: 13px; 
+}
+input.tntRCInput, input.tntRCInputCP
+{
+	margin: 5px 0 0 3px;
+}
+
+div.tntchoixCP
+{
+	line-height: 20px;
+}
+
+div.tntchoixCP label
+{
+	float:left;
+}
+div.tntchoixCP label
+{
+	float:left;
+}
+
+
+#relaisColisResponse
+{
+	width:450px;
+	float:left;
+	font-size:12px;
+}
+#tr_carrier_relais #map_canvas{
+	width:430px;
+	height:390px;
+	float:right;
+	margin-left:10px;
+}
+
+
+.redmsg{
+	color:red;
+}
+
+.tabledepot{
+	 border:1px solid gray;
+}
+
+.btnagence
+{
+	margin-top:5px;
+	text-align:center;
+}

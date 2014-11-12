@@ -51,10 +51,10 @@ function phoneForm($mob, $tel)
 {
 	if ($tel != '06' && $mob != '06' && $tel != '07' && $mob != '07')
 	{
-		echo '<div id="mobilenumber" style="float:left;margin-top:10px;text-align:left;">';
+		echo '<div id="mobilenumber" >';
 		echo 'Afin d\'ameliorer les conditions de livraison, veuillez renseigner votre numero de mobile : <input type="mobile" name="mobileTnt" id="mobileTnt" onblur="postMobile(\''.Configuration::get('TNT_CARRIER_TOKEN').'\')"/>
 		<input type="hidden" id="id_cart" value="'.Tools::safeOutput($_GET['idcart']).'"/>';
-		echo '<hr style="border:none;margin-bottom:4px;" />';
+		echo '<hr />';
 		echo '</div>';
 		return true;
 	}
@@ -77,11 +77,11 @@ $tel = substr($address->phone, 0, 2);
 if ($tnt_carrier !== false)
 {
 
-	if(_PS_VERSION_ >= 1.6)
+	if (version_compare(_PS_VERSION_, '1.6', '>='))
 	{
 		$description = $carrier_infos[0]['name'].' '.$carrier_infos[0]['delay'];
 
-		echo '<h3 style="color:black;font-size: 18px; ">'.$description.'</h3>';
+		echo '<h3 class="descr">'.$description.'</h3>';
 							
 		if ($relais !== false)
 		{
@@ -91,11 +91,13 @@ if ($tnt_carrier !== false)
 			<input id="tntRCSelectedAdresse" type="hidden" value="">
 			<input id="tntRCSelectedCodePostal" type="hidden" value="">
 			<input id="tntRCSelectedCommune" type="hidden" value="">
-			<div id="tntcp" style="text-align:left;padding-bottom:10px;">
-				<div><span style="font-size: 13px; ">Choisissez le Relais Colis<sup class="tntRCSup">&reg;</sup>qui vous convient, entrez le code postal : </span><input style="margin: 5px 0 0 3px" id="tntRCInputCP" class="tntRCInput" type="text" value="<?php echo $postcode;?>" size="5" maxlength="5"> <button type="button" class="button" onclick="tntRCgetCommunes();">Ok</button><br/></div>
+			<div id="tntcp">
+				<div><span class="choixrelais">Choisissez le Relais Colis<sup class="tntRCSup">&reg;</sup>qui vous convient, entrez le code postal : </span>
+					<input id="tntRCInputCP" class="tntRCInput" type="text" value="<?php echo $postcode;?>" size="5" maxlength="5">
+					 <button type="button" class="button" onclick="tntRCgetCommunes();">Ok</button><br/></div>
 			</div>
-			<div id="relaisColisResponse" style="width:450px;float:left;font-size:12px;"></div>
-			<div id="map_canvas" class="exemplePresentation" style="width:430px;height:400px;float:right;margin-left:10px"></div>
+			<div id="relaisColisResponse" ></div>
+			<div id="map_canvas" class="exemplePresentation" ></div>
 			<?php
 		}
 		
@@ -114,9 +116,9 @@ if ($tnt_carrier !== false)
 			<input id="tntRCSelectedCodePostal" type="hidden" value="">
 			<input id="tntRCSelectedCommune" type="hidden" value="">
 			<h3>Choisissez le Relais Colis<sup class="tntRCSup">&reg;</sup>qui vous convient :</h3>
-				<div style="line-height: 20px"><label style="float:left;">Entrez le code postal : </label><input style="margin: 5px 0 0 3px" id="tntRCInputCP" class="tntRCInput" type="text" value="<?php echo $postcode;?>" size="5" maxlength="5"> <button type="button" class="button" onclick="tntRCgetCommunes();">Ok</button></div><br/>
+				<div class='tntchoixCP'><label>Entrez le code postal : </label><input id="tntRCInputCP" class="tntRCInput" type="text" value="<?php echo $postcode;?>" size="5" maxlength="5"> <button type="button" class="button" onclick="tntRCgetCommunes();">Ok</button></div><br/>
 			<div id="relaisColisResponse"></div>
-			<div id="map_canvas" class="exemplePresentation" style="margin:10px 0;width: 100%; height: 482px"></div>
+			<div id="map_canvas" class="exemplePresentation"></div>
 			<?php
 		}
 	}
