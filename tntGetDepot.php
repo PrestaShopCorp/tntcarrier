@@ -44,7 +44,7 @@ function getDepot($soapclient, $code)
 }
 
 if (!Configuration::get('TNT_CARRIER_LOGIN') || !Configuration::get('TNT_CARRIER_PASSWORD') || !Configuration::get('TNT_CARRIER_NUMBER_ACCOUNT'))
-	echo '<span style="color:red">No account found</span>';
+	echo '<span class="redmsg">No account found</span>';
 else
 {
 	$code = $_GET['code'];
@@ -90,7 +90,7 @@ else
 					<input type='hidden' id='tntRCSelectedCodePostal' />
 					<input type='hidden' id='tntRCSelectedCommune' />";
 			echo "
-				<table width='480px' cellspacing='0' cellpadding='0' style='border:1px solid gray;'>
+				<table width='480px' cellspacing='0' cellpadding='0' class='tabledepot'>
 				<tbody>
 				<tr height='8px'>
 				<td class='tntRCblanc' colspan='6'></td>
@@ -122,7 +122,7 @@ else
 							<td></td>
 							<td></td>
 							<td></td>
-							<td class='tntRCblanc'></td>
+							<td class='tntRCblanc' colspan='2'></td>
 							</tr>";
 					}
 				else
@@ -140,11 +140,11 @@ else
 							<td></td>
 							<td></td>
 							<td></td>
-							<td class='tntRCblanc'></td>
+							<td class='tntRCblanc' colspan='2'></td>
 							</tr>";
 			echo "
 				</table>
-				<div style='margin-top:5px;text-align:center'>
+				<div class='btnagence'>
 				<input class='button' type='button' value='Remplir les informations de l&rsquo;agence' onclick='callbackSelectionRelais();return false;' />
 				</div>";
 		}

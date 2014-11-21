@@ -143,6 +143,10 @@ class TntWebService
 		$soapclient->__setSOAPHeaders(array($this->_header));
 		$tntcarrier = new TntCarrier();
 
+		$scity = Configuration::get('TNT_CARRIER_SHIPPING_CITY');
+		
+		$scity = (strlen($scity) > 27 ? substr($scity, 0, 27) : $scity);
+		
 		$sender = array(
 			'type' => "ENTERPRISE",//(Configuration::get('TNT_CARRIER_SHIPPING_COLLECT') ? "ENTERPRISE" : "DEPOT"), //ENTREPRISE OR DEPOT
 			'typeId' => "",//(Configuration::get('TNT_CARRIER_SHIPPING_COLLECT') ? "" : Configuration::get('TNT_CARRIER_SHIPPING_PEX')) , // code PEX if DEPOT is ON
@@ -150,14 +154,14 @@ class TntWebService
 			'address1' => (strlen(Configuration::get('TNT_CARRIER_SHIPPING_ADDRESS1')) > 32 ? substr(Configuration::get('TNT_CARRIER_SHIPPING_ADDRESS1'), 0, 32) : Configuration::get('TNT_CARRIER_SHIPPING_ADDRESS1')),
 			'address2' => (strlen(Configuration::get('TNT_CARRIER_SHIPPING_ADDRESS2')) > 32 ? substr(Configuration::get('TNT_CARRIER_SHIPPING_ADDRESS2'), 0, 32) : Configuration::get('TNT_CARRIER_SHIPPING_ADDRESS2')),
 			'zipCode' => Configuration::get('TNT_CARRIER_SHIPPING_ZIPCODE'),
-			'city' => $tntcarrier->putCityInNormeTnt(Configuration::get('TNT_CARRIER_SHIPPING_CITY')),
+			'city' => $scity,
 			'contactLastName' => (strlen(Configuration::get('TNT_CARRIER_SHIPPING_LASTNAME')) > 19 ? substr(Configuration::get('TNT_CARRIER_SHIPPING_LASTNAME'), 0, 19) : Configuration::get('TNT_CARRIER_SHIPPING_LASTNAME')),
 			'contactFirstName' => (strlen(Configuration::get('TNT_CARRIER_SHIPPING_FIRSTNAME')) > 12 ? substr(Configuration::get('TNT_CARRIER_SHIPPING_FIRSTNAME'), 0, 12) : Configuration::get('TNT_CARRIER_SHIPPING_FIRSTNAME')),
 			'emailAddress' => Configuration::get('TNT_CARRIER_SHIPPING_EMAIL'),
 			'phoneNumber' => str_replace(' ', '', Configuration::get('TNT_CARRIER_SHIPPING_PHONE')),
 			'faxNumber' => '' //may be later
 		);
-
+		
 		$phone = (isset($info[0]['phone_mobile']) && $info[0]['phone_mobile'] != '' ? str_replace(' ', '', $info[0]['phone_mobile']) : str_replace(' ', '', $info[0]['phone']));
 
 		if (substr($phone, 0, 3) == '+33')

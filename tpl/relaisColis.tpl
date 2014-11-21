@@ -26,7 +26,12 @@
 <link rel="stylesheet" href="{$shop_url}/modules/tntcarrier/css/ui.tabs.css" type="text/css" />
 <link rel="stylesheet" href="{$shop_url}/modules/tntcarrier/css/ui.dialog.css" type="text/css" />
 {if isset($js_include)}
-    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+	<script language="javascript">
+		if($('#googleAPI')==undefined)
+		{
+			getScript("http://maps.google.com/maps/api/js?sensor=true");
+		}
+	</script>
     <script type="text/javascript" src="{$shop_url}/modules/tntcarrier/js/relais.js"></script>
     <script type="text/javascript" src="{$shop_url}/js/jquery/jquery-ui-1.8.10.custom.min.js"></script>
 {/if}
@@ -69,10 +74,10 @@ $().ready(function()
 });
 
 $("input[name='id_carrier']").click(function() {
-    idcarrier = $(this).val();
+    var idcarrier = $(this).val();
     if (date_carrier[idcarrier] != undefined)
     {
-	idCart = document.getElementById("cartRelaisColis").value;
+	var idCart = document.getElementById("cartRelaisColis").value;
 	$.ajax({
 	    type: "POST",
 	    url: "{/literal}{$shop_url}{literal}/modules/tntcarrier/relaisColis/postRelaisData.php",
@@ -97,7 +102,7 @@ function displayNewTable(response, id)
     if (!display)
 	return false;
     $("#id_carrier"+id).parent().parent().after("<tr><td colspan='4' style='display:none' id='tr_carrier_relais'></td></tr>");
-    $("#tr_carrier_relais").html(response);
+	$("#tr_carrier_relais").html(response);
     $("#tr_carrier_relais").slideDown('slow');
     tntRCInitMap();
     tntRCgetCommunes();
@@ -106,10 +111,10 @@ function displayNewTable(response, id)
 {/literal}
 {else}
 {literal}
-$(document).ready(function()
-{
-	var chosenCarrier = $("input[name*='delivery_option[']:checked").val().split(',');
-	getAjaxRelais(chosenCarrier[0]);
+	$(document).ready(function()
+	{
+		var chosenCarrier = $("input[name*='delivery_option[']:checked").val().split(',');
+		getAjaxRelais(chosenCarrier[0]);
 		$("[id*='delivery_option_']").each(function(){
 			var id_array = $(this).val().split(',');
 			var indexTab = jQuery.inArray(id_array[0], id_carrier);
@@ -118,17 +123,39 @@ $(document).ready(function()
 				if(option_carrier[indexTab].length > 1)
 				{
 					if (option_carrier[indexTab].charAt(1) == 'Z')
-						$("[for='"+$(this).attr('id')+"'] .delivery_option_delay").append(" <span id=\'tnt_popup"+id_array[0]+"\' onclick=\'displayHelpCarrier(\"http://www.tnt.fr/BtoC/page_domicile.html\");return false;\' style=\'font-style:italic;cursor:pointer;color:blue;text-decoration:underline\'>+ d\'infos</span>");
+						$("[for='"+$(this).attr('id')+"'] .delivery_option_logo").append(" <span id=\'tnt_popup\' onclick=\'displayHelpCarrier(\"http://www.tnt.fr/BtoC/page_domicile.html\");return false;\' style=\'font-style:italic;cursor:pointer;color:blue;text-decoration:underline\'>+ d\'infos</span>");
 					else if (option_carrier[indexTab].charAt(1) == 'D')
-						$("[for='"+$(this).attr('id')+"'] .delivery_option_delay").append(" <span id=\'tnt_popup"+id_array[0]+"\' onclick=\'displayHelpCarrier(\"http://www.tnt.fr/BtoC/page_relais-colis.html\");return false;\' style=\'font-style:italic;cursor:pointer;color:blue;text-decoration:underline\'>+ d\'infos</span>");
+						$("[for='"+$(this).attr('id')+"'] .delivery_option_logo").append(" <span id=\'tnt_popup"+id_array[0]+"\' onclick=\'displayHelpCarrier(\"http://www.tnt.fr/BtoC/page_relais-colis.html\");return false;\' style=\'font-style:italic;cursor:pointer;color:blue;text-decoration:underline\'>+ d\'infos</span>");
 					else
-						$("[for='"+$(this).attr('id')+"'] .delivery_option_delay").append(" <span id=\'tnt_popup"+id_array[0]+"\' onclick=\'displayHelpCarrier(\"http://www.tnt.fr/BtoC/page_popup.html\");return false;\' style=\'font-style:italic;cursor:pointer;color:blue;text-decoration:underline\'>+ d\'infos</span>");
+						$("[for='"+$(this).attr('id')+"'] .delivery_option_logo").append(" <span id=\'tnt_popup"+id_array[0]+"\' onclick=\'displayHelpCarrier(\"http://www.tnt.fr/BtoC/page_popup.html\");return false;\' style=\'font-style:italic;cursor:pointer;color:blue;text-decoration:underline\'>+ d\'infos</span>");
 				}
 				else
-					$("[for='"+$(this).attr('id')+"'] .delivery_option_delay").append(" <span id=\'tnt_popup"+id_array[0]+"\' onclick=\'displayHelpCarrier(\"http://www.tnt.fr/BtoC/page_popup.html\");return false;\' style=\'font-style:italic;cursor:pointer;color:blue;text-decoration:underline\'>+ d\'infos</span>");
+					$("[for='"+$(this).attr('id')+"'] .delivery_option_logo").append(" <span id=\'tnt_popup"+id_array[0]+"\' onclick=\'displayHelpCarrier(\"http://www.tnt.fr/BtoC/page_popup.html\");return false;\' style=\'font-style:italic;cursor:pointer;color:blue;text-decoration:underline\'>+ d\'infos</span>");
 			}
 		});
 	});
+	
+	
+	$("input[name='id_carrier']").click(function() {
+		var idcarrier = $(this).val();
+		if (date_carrier[idcarrier] != undefined)
+		{
+		var idCart = document.getElementById("cartRelaisColis").value;
+		$.ajax({
+			type: "POST",
+			url: "{/literal}{$shop_url}{literal}/modules/tntcarrier/relaisColis/postRelaisData.php",
+			data: "id_cart="+idCart+"&due_date="+date_carrier[idcarrier]
+		});
+		}
+		getAjaxRelais($("input[name='id_carrier']:checked").val());
+		if (document.getElementById("tr_carrier_relais"))
+		{
+			var node = document.getElementById("tr_carrier_relais").parentNode;
+			var father = node.parentNode;
+			father.removeChild(node);
+		}
+	});
+
 	
 	if ($('.opc-main-block').length == 0) {
 		$("input[name*='delivery_option[']").click(function() {
@@ -138,23 +165,140 @@ $(document).ready(function()
 			getAjaxRelais(id_array[0]);
 		});
 	}
-	function displayNewTable(response, id)
-		{
-			$("[id*='delivery_option_']").each(function(){
-				var id_array = $(this).val().split(',');
-				if (id_array[0] == id && $("#tr_carrier_relais").length <= 0)
-				{
-					$(this).next("[for*='delivery_option_']").after("<div style='display:none' id='tr_carrier_relais'></div>");
-					$("#tr_carrier_relais").html(response);
-					$("#tr_carrier_relais").css('padding', '4px');
-					$("#tr_carrier_relais h3").css('margin', '0 -5px');
-					$("#tr_carrier_relais").slideDown('slow');
-					tntRCInitMap();
-					tntRCgetCommunes();
-				}
-				});
+	
+	function submitFormCmd()
+	{
+		hideNewShowCarrier();
+	}
+	
+	function displayHelp()
+	{
+		if ($('#moreinformations').length){
+			$('#moreinformations').remove();
 		}
+		$("#HOOK_BEFORECARRIER").after("<div id='moreinformations' style='margin-bottom:10px;'></div>");
+		
+		if ($("#tntRCSelectedType").val() == 'JZ')
+			$("#moreinformations").html("Vous avez s&eacute;lectionn&eacute; la livraison TNT 24h à domicile, pour avoir plus d'informations <span id='tnt_popup' class='button btn'><a href='#' onclick='displayNewHelpCarrier(\"http://www.tnt.fr/BtoC/page_domicile.html\")'>Cliquez-ici</a></span>");
+		else if ($("#tntRCSelectedType").val() == 'JD')
+			$("#moreinformations").html("Vous avez s&eacute;lectionn&eacute; la livraison TNT 24h Relais Colis®, pour avoir plus d'informations <span id='tnt_popup' class='button btn'><a href='#' onclick='displayNewHelpCarrier(\"http://www.tnt.fr/BtoC/page_relais-colis.html\")'>Cliquez-ici</a></span>");
+		else if ($("#tntRCSelectedType").val() == 'J')
+			$("#moreinformations").html("Vous avez s&eacute;lectionn&eacute; la livraison TNT 24h au bureau, pour avoir plus d'informations <span id='tnt_popup' class='button btn'><a href='#' onclick='displayNewHelpCarrier(\"http://www.tnt.fr/BtoC/page_popup.html\")'>Cliquez-ici</a></span>");
+	}
+	
+	function displayRelais()
+	{
+		$("#extra_carrier").after("<div id='relaisColis' style='margin-bottom:10px;'></div>");
+		$("#relaisColis").html("Relais Colis s&eacute;lectionn&eacute; :<br/>" + $("#tntRCSelectedNom").val() + "<br/>" + $("#tntRCSelectedAdresse").val() + "<br/>" + $("#tntRCSelectedCodePostal").val() + " " + $("#tntRCSelectedCommune").val());
+		$("#extra_carrier").css('display', 'block');
+	}
+	
+	function displayNewTable(response, id)
+	{
+		$("#tntShowCarrier").hide();
+		
+		if ($('#tntShowCarrier').length){
+			$('#tntShowCarrier').remove();
+		}
+		if ($('#moreinformations').length){
+			$('#moreinformations').remove();
+		}
+		if ($('#relaisColis').length){
+			$('#relaisColis').remove();
+		}
+		$("#page").after("<div id='tntShowCarrier' style='display:none;'><div id='helpCarrierBlock' style='text-align:center;position:relative'><div style='border-radius:10px;width:930px;margin:auto;background-color:white;padding-top:10px;'><span class='button btn' onclick='hideNewShowCarrier()' style='float:right;margin-right:37px;'>{/literal}{l s='Close' mod='tntcarrier'}{literal}</span><br/><div id='tr_carrier_relais' style='width:920px;border:none;margin-top:5px;overflow-x:hidden;overflow-y:auto;'></div><div id='button_carrier_relais' style='padding-top:5px;padding-bottom:10px;'></p><a href='#' class='button btn' onclick='submitFormCmd()'>{/literal}{l s='Valider' mod='tntcarrier'}{literal}</a></div></div></div></div>");
+		$("#tntShowCarrier").css('height', ($(document).height())+'px');
+		$("#tntShowCarrier").css('width', $(document).width()+'px');
+		$("#tntShowCarrier").css('background', 'url({/literal}{$shop_url}{literal}img/macFFBgHack.png)');
+		$("#tntShowCarrier").css('position', 'absolute');
+		$("#tntShowCarrier").css('top', '0px');
+		$("#tntShowCarrier").css('z-index', '99999');
+		$("#helpCarrierBlock").css('top', $(window).scrollTop()+'px');
+		if ($(window).height() > 500)
+		{
+			var h = ($(window).height() - 720) / 2+'px';
+			
+			$("#helpCarrierBlock").css('margin-top', h);
+		}
+		else
+			$("#HelpCarrierBlock").css('margin-top', '20px');
+			
+		$("#tr_carrier_relais").html(response);
+		
+		$("#tr_carrier_relais").css('padding', '4px');
+		$("#tr_carrier_relais h3").css('margin', '0 -5px');
+		tntRCInitMap();
+		tntRCgetCommunes();
+		
+		if ($("#tntRCSelectedType").val() == 'JD' || $('#mobilenumber').length )
+		{
+			$("#tntShowCarrier").css('display','block');
+		}
+		
+		var htr = 505;
+		
+		if($("#tr_carrier_relais").height() < htr)
+			htr = $("#tr_carrier_relais").height() + 20;
+
+		$("#tr_carrier_relais").css('height', htr+'px');
+		
+		google.maps.event.trigger(map, 'resize');
+		
+		displayHelp();
+	}
+	
+	function displayNewHelpCarrier(src)
+	{
+		$('#tntHelpCarrier').remove();
+		$("#page").after("<div id='tntHelpCarrier'><div id='helpCarrierBlock' style='text-align:center;position:relative'><div style='width:930px;margin:auto;background-color:white;border-radius:10px;'><span class='button btn' onclick='hideNewHelpCarrier()' style='float:right;margin-right:37px;'>{/literal}{l s='Close' mod='tntcarrier'}{literal}</span><br/><iframe id='helpCarrierFrame' style='height:500px;width:900px;border:none;margin-top:5px;overflow-x:hidden;overflow-y: scroll;'></iframe></div></div></div>");
+		$("#tntHelpCarrier").css('height', $(document).height()+'px');
+		$("#tntHelpCarrier").css('width', $(document).width()+'px');
+		$("#tntHelpCarrier").css('background', 'url({/literal}{$shop_url}{literal}img/macFFBgHack.png)');
+		$("#tntHelpCarrier").css('position', 'absolute');
+		$("#tntHelpCarrier").css('top', '0px');
+		$("#tntHelpCarrier").css('z-index', '99999');
+		$("#helpCarrierFrame").attr('src', src);
+		$("#helpCarrierBlock").css('top', $(window).scrollTop()+'px');
+		if ($(window).height() > 500)
+		{
+			var h = ($(window).height() - 520) / 2+'px';
+			
+			$("#helpCarrierBlock").css('margin-top', h);
+		}
+		else
+			$("#HelpCarrierBlock").css('margin-top', '20px');
+	}
+	
+	
+	
+	function hideNewShowCarrier()
+	{
+		if($("#tntRCSelectedNom").val() == "")
+		{
+			alert('Vous devez choisir un relais colis !');
+		}
+		else if($('#mobilenumber').length && $('#mobileTnt').val().length < 10)
+		{
+			alert('Veuillez saisir un numéro de téléphone portable !');
+		}
+		else
+		{
+			$("#tntShowCarrier").hide();
+			displayHelp(); 
+			if ($("#tntRCSelectedType").val() == 'JD')
+			{
+				displayRelais();
+			}
+		}
+		
+		
+	}
+	
+	function hideNewHelpCarrier()
+	{
+		$("#tntHelpCarrier").hide();
 {/literal}
+	}
 {/if}
 {literal}
 	function getAjaxRelais(id)
@@ -163,10 +307,11 @@ $(document).ready(function()
 			"{/literal}{$shop_url}{literal}/modules/tntcarrier/relaisColis.php?id_carrier="+id+"&idcart="+$("#cartRelaisColis").val(),
 			function(response, status, xhr) 
 			{
-				/*if (status == "error") 
-					$("#tr_carrier_relais").html(xhr.status + " " + xhr.statusText);*/
+				
+				if (status == "error") 
+					$("#tr_carrier_relais").html(xhr.status + " " + xhr.statusText);
 				$("#loadingRelais"+id).hide();
-				if (status == 'success' && response != 'none')
+				if (status == 'success' && response != '' && response != 'none')
 				{
 					displayNewTable(response, id);
 				}
@@ -214,6 +359,7 @@ $(document).ready(function()
 	}
 {/literal}
 </script>
+{if $version < '1.6'}
 <div id="tntHelpCarrier" style="display:none;position:absolute;width:100%;top:0px;left:0px;background:url('{$shop_url}img/macFFBgHack.png');z-index:10000">
 	<div id="helpCarrierBlock" style="text-align:center;position:relative">
 		<div style="width:720px;margin:auto;background-color:white">
@@ -223,6 +369,7 @@ $(document).ready(function()
 		</div>
 	</div>
 </div>
+{/if}
 <input type="hidden" id="cartRelaisColis" value="{$id_cart}" name="cartRelaisColis" />
 
 {if isset($error)}

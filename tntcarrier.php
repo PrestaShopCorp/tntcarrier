@@ -39,8 +39,8 @@ class TntCarrier extends CarrierModule
 	public  $id_carrier;
 
 	private $_html = '';
-	private $_postErrors = array();
 	private $_moduleName = 'tntcarrier';
+	private $_postErrors = array();
 	private $_fieldsList = array();
 
 	/*
@@ -51,7 +51,7 @@ class TntCarrier extends CarrierModule
 	{
 		$this->name = 'tntcarrier';
 		$this->tab = 'shipping_logistics';
-		$this->version = '1.9.11';
+		$this->version = '1.9.12';
 		$this->author = 'PrestaShop';
 		$this->limited_countries = array('fr');
 		$this->module_key = 'd4dcfde9937b67002235598ac35cbdf8';
@@ -148,6 +148,7 @@ class TntCarrier extends CarrierModule
 		{
 			$carrierConfig = array(
 				'name' => $v->name,
+				'url' => $v->url,
 				'id_tax_rules_group' => 0,
 				'deleted' => ($v->option == 'JS' ? 1 : 0),
 				'shipping_handling' => false,
@@ -182,6 +183,7 @@ class TntCarrier extends CarrierModule
 	{
 		$carrier = new Carrier();
 		$carrier->name = $config['name'];
+		$carrier->url = $config['url'];
 		$carrier->id_tax_rules_group = $config['id_tax_rules_group'];
 		$carrier->id_zone = $config['id_zone'];
 		$carrier->active = $config['active'];
@@ -349,12 +351,12 @@ class TntCarrier extends CarrierModule
 	private function _displayFormConfig()
 	{
 		global $smarty;
-		
+
 		$var = array('account' => $this->_displayFormAccount(), 'shipping' => $this->_displayFormShipping(), 'service' => $this->_displayService(),
 					 'country' => $this->_displayCountry('Corse'), 'info' => $this->_displayInfo('weight'));
 		$smarty->assign('varMain', $var);
 		$html = $this->display( __FILE__, 'tpl/main.tpl' );
-		
+
 		if (isset($_GET['id_tab']))
 			$html .= '<script>
 				$(".menuTabButton.selected").removeClass("selected");
@@ -438,36 +440,42 @@ class TntCarrier extends CarrierModule
 			$id = Tools::getValue($cat);
 			Db::getInstance()->Execute('DELETE FROM `'._DB_PREFIX_.'tnt_carrier_'.$this->bqSQL($cat).'` WHERE `id_'.$this->bqSQL($cat).'` = '.(int)$id.'');
 		}
-
-		$html = '
-		<a href="index.php?tab='.htmlentities(Tools::getValue('tab')).'&configure='.htmlentities(Tools::getValue('configure')).'&token='.htmlentities(Tools::getValue('token')).'&tab_module='.htmlentities(Tools::getValue('tab_module')).'&module_name='.htmlentities(Tools::getValue('module_name')).'&id_tab=3&section='.htmlentities($cat).'&action=new">
-		<img src="../img/admin/add.gif" alt="add"/> '.$this->l('Add additional charges depending on the package weight').'</a></br><br/>
-		<table class="table" cellspacing="0" cellpading="0">
-			<tr>
-				<!--<th>'.$this->l('ID').'</th>-->
-				<th>'.$this->l('Weight Min').'</th><th>'.$this->l('Weight Max').'</th><th>'.$this->l('Additionnal charge (Euros)').'</th><th></th>
-			</tr>';
-		$List = Db::getInstance()->ExecuteS('SELECT * FROM `'._DB_PREFIX_.'tnt_carrier_'.$this->bqSQL($cat).'` ORDER BY `id_'.$this->bqSQL($cat).'`');
-		$irow = 0;
-		foreach ($List as $v)
+		if (version_compare(_PS_VERSION_, '1.6', '<'))
 		{
-			$html .= '<tr '.($irow++ % 2 ? 'class="alt_row"' : '').'>
-			<!--<td>'.$v['id_'.$cat.''].'</td>-->
-			<td>'.$v[''.$cat.'_min'].'</td>
-			<td>'.((float)$v[''.$cat.'_max'] == 0 ? '&infin;' : $v[''.$cat.'_max']).'</td>
-			<td>'.$v['additionnal_charges'].'</td>
-			<td>
-			<a href="index.php?tab='.htmlentities(Tools::getValue('tab')).'&configure='.htmlentities(Tools::getValue('configure')).'&token='.htmlentities(Tools::getValue('token')).'&tab_module='.htmlentities(Tools::getValue('tab_module')).'&module_name='.htmlentities(Tools::getValue('module_name')).'&id_tab=3&section='.$cat.'&action=edit&'.$cat.'='.$v['id_'.$cat.''].'">
-				<img src="../img/admin/edit.gif" alt="edit" title="'.$this->l('Edit').'"/></a>
-				<a href="index.php?tab='.htmlentities(Tools::getValue('tab')).'&configure='.htmlentities(Tools::getValue('configure')).'&token='.htmlentities(Tools::getValue('token')).'&tab_module='.htmlentities(Tools::getValue('tab_module')).'&module_name='.htmlentities(Tools::getValue('module_name')).'&id_tab=3&section='.$cat.'&action=del&'.$cat.'='.$v['id_'.$cat.''].'">
-				<img src="../img/admin/delete.gif" alt="delete" title="'.$this->l('Delete').'"/></a></td>
-			</tr>';
-		}
-		$html .= '
-		</table><br/>
-		<div id="divForm'.htmlentities($cat).'Service">'.((Tools::getValue('action') == 'edit' || Tools::getValue('action') == 'new') && Tools::getValue('section') == $cat ? $this->_displayFormInfo($cat, htmlentities(Tools::getValue($cat))) : '').'</div>
-		';
+			$html = '
+			<a href="index.php?tab='.htmlentities(Tools::getValue('tab')).'&configure='.htmlentities(Tools::getValue('configure')).'&token='.htmlentities(Tools::getValue('token')).'&tab_module='.htmlentities(Tools::getValue('tab_module')).'&module_name='.htmlentities(Tools::getValue('module_name')).'&id_tab=3&section='.htmlentities($cat).'&action=new">
+			<img src="../img/admin/add.gif" alt="add"/> '.$this->l('Add additional charges depending on the package weight').'</a></br><br/>
+			<table class="table" cellspacing="0" cellpading="0">
+				<tr>
+					<!--<th>'.$this->l('ID').'</th>-->
+					<th>'.$this->l('Weight Min').'</th><th>'.$this->l('Weight Max').'</th><th>'.$this->l('Additionnal charge (Euros)').'</th><th></th>
+				</tr>';
+			$List = Db::getInstance()->ExecuteS('SELECT * FROM `'._DB_PREFIX_.'tnt_carrier_'.$this->bqSQL($cat).'` ORDER BY `id_'.$this->bqSQL($cat).'`');
+			$irow = 0;
+			foreach ($List as $v)
+			{
+				$html .= '<tr '.($irow++ % 2 ? 'class="alt_row"' : '').'>
+				<!--<td>'.$v['id_'.$cat.''].'</td>-->
+				<td>'.$v[''.$cat.'_min'].'</td>
+				<td>'.((float)$v[''.$cat.'_max'] == 0 ? '&infin;' : $v[''.$cat.'_max']).'</td>
+				<td>'.$v['additionnal_charges'].'</td>
+				<td>
+				<a href="index.php?tab='.htmlentities(Tools::getValue('tab')).'&configure='.htmlentities(Tools::getValue('configure')).'&token='.htmlentities(Tools::getValue('token')).'&tab_module='.htmlentities(Tools::getValue('tab_module')).'&module_name='.htmlentities(Tools::getValue('module_name')).'&id_tab=3&section='.$cat.'&action=edit&'.$cat.'='.$v['id_'.$cat.''].'">
+					<img src="../img/admin/edit.gif" alt="edit" title="'.$this->l('Edit').'"/></a>
+					<a href="index.php?tab='.htmlentities(Tools::getValue('tab')).'&configure='.htmlentities(Tools::getValue('configure')).'&token='.htmlentities(Tools::getValue('token')).'&tab_module='.htmlentities(Tools::getValue('tab_module')).'&module_name='.htmlentities(Tools::getValue('module_name')).'&id_tab=3&section='.$cat.'&action=del&'.$cat.'='.$v['id_'.$cat.''].'">
+					<img src="../img/admin/delete.gif" alt="delete" title="'.$this->l('Delete').'"/></a></td>
+				</tr>';
+			}
 
+			$html .= '
+			</table><br/>
+			<div id="divForm'.htmlentities($cat).'Service">'.((Tools::getValue('action') == 'edit' || Tools::getValue('action') == 'new') && Tools::getValue('section') == $cat ? $this->_displayFormInfo($cat, htmlentities(Tools::getValue($cat))) : '').'</div>
+			';
+		}
+		else
+		{
+			$html = $this->l('You can add additional charges depending on the package weight, in carrier configuration');
+		}
 		return $html;
 	}
 
@@ -529,22 +537,30 @@ class TntCarrier extends CarrierModule
 			$charge = $info['additionnal_charges'];
 		}
 
-		$html = '
-		<form action="index.php?tab='.htmlentities(Tools::getValue('tab')).'&configure='.htmlentities(Tools::getValue('configure')).'&token='.htmlentities(Tools::getValue('token')).'&tab_module='.htmlentities(Tools::getValue('tab_module')).'&module_name='.htmlentities(Tools::getValue('module_name')).'&id_tab=3&section='.$cat.'&action=new" method="post" class="form" id="configForm'.$cat.'">
-			'.($id != null ? '<input type="hidden" name="'.$cat.'_id" value="'.$id.'"/>' : '').'
-			<table class="table" cellspacing="0" cellpadding="0">
-				<tr>
-					<th>'.$this->l('Weight min').'</th><th>'.$this->l('Weight max (can be empty)').'</th><th>'.$this->l('Additionnal charge').'</th><th></th>
-				</tr>
-				<tr>
-					<td><input type="text" name="tnt_carrier_'.$cat.'_min" size="20" value="'.$info_min.'"/></td>
-					<td><input type="text" name="tnt_carrier_'.$cat.'_max" size="20" value="'.$info_max.'"/></td>
-					<td><input type="text" name="tnt_carrier_'.$cat.'_charge" size="10" value="'.$charge.'"/></td>
-					<td><input class="button" name="submitSave" type="submit" value="'.$this->l('save').'"></td>
-				</tr>
-			</table>
-		</form>';
+		$html = '';
 
+		if (version_compare(_PS_VERSION_, '1.6', '<'))
+		{
+			$html .= '
+			<form action="index.php?tab='.htmlentities(Tools::getValue('tab')).'&configure='.htmlentities(Tools::getValue('configure')).'&token='.htmlentities(Tools::getValue('token')).'&tab_module='.htmlentities(Tools::getValue('tab_module')).'&module_name='.htmlentities(Tools::getValue('module_name')).'&id_tab=3&section='.$cat.'&action=new" method="post" class="form" id="configForm'.$cat.'">
+				'.($id != null ? '<input type="hidden" name="'.$cat.'_id" value="'.$id.'"/>' : '').'
+				<table class="table" cellspacing="0" cellpadding="0">
+					<tr>
+						<th>'.$this->l('Weight min').'</th><th>'.$this->l('Weight max (can be empty)').'</th><th>'.$this->l('Additionnal charge').'</th><th></th>
+					</tr>
+					<tr>
+						<td><input type="text" name="tnt_carrier_'.$cat.'_min" size="20" value="'.$info_min.'"/></td>
+						<td><input type="text" name="tnt_carrier_'.$cat.'_max" size="20" value="'.$info_max.'"/></td>
+						<td><input type="text" name="tnt_carrier_'.$cat.'_charge" size="10" value="'.$charge.'"/></td>
+						<td><input class="button" name="submitSave" type="submit" value="'.$this->l('save').'"></td>
+					</tr>
+				</table>
+			</form>';
+		}
+		else
+		{
+			$html .= $this->l('You can add additional charges depending on the package weight, in carrier configuration');
+		}
 		return $html;
 	}
 
@@ -958,17 +974,19 @@ class TntCarrier extends CarrierModule
 				'dueDate' => $dueDate,
 			)
 		);
-		
+
 		$output = null;
 		if (isset($this->context) && method_exists($this->context->controller, 'addJS'))
-		{
+		{	
 			$this->context->controller->addJS('http://maps.google.com/maps/api/js?sensor=true');
 			$this->context->controller->addJS($this->_path.'js/relais.js');
 			$this->context->controller->addJS($this->_path.'js/jquery-ui-1.8.10.custom.min.js');
+			$this->context->controller->addCss($this->_path.'css/tntRelaisColis.css');
 		}
 		else
 			$smarty->assign('js_include', true);
 		
+
 		return $output.$this->display(__FILE__, 'tpl/relaisColis.tpl');
 	}
 
@@ -1071,6 +1089,8 @@ class TntCarrier extends CarrierModule
 					$errorFriendly = $this->l('Can you please modify the field').' '.substr($e->faultstring, strpos($e->faultstring, "sender") + 7, strpos($e->faultstring, "'", strpos($e->faultstring, "sender" ) - strpos($e->faultstring, "sender")) + 1).' '.$this->l('in your tnt module configuration.');
 				}
 
+				Db::getInstance()->update('order_carrier', array('tracking_number' => $pack->getOrder()->shipping_number),'id_order = '.(int)$params['id_order']);
+
 				$error = $this->l("Problem : ") . $e->faultstring;
 				$var = array("error" => $error, "errorFriendly" => $errorFriendly, "date" => (isset($dateError) ? $dateError : ''), 'currentIndex' => $currentIndex, 'table' => $table, 'token' => $token);
 				$smarty->assign('var', $var);
@@ -1094,7 +1114,7 @@ class TntCarrier extends CarrierModule
 				'sticker' => "../modules/".$this->_moduleName.'/pdf/'.$pack->getOrder()->shipping_number.'.pdf',
 				'date' => Db::getInstance()->getValue('SELECT `pickup_date` FROM `'._DB_PREFIX_.'tnt_package_history` WHERE `id_order` = "'.(int)$params['id_order'].'"'),
 				'relay' => (isset($info[4]) ? $info[4]['name'].'<br/>'.$info[4]['address'].'<br/>'.$info[4]['zipcode'].' '.$info[4]['city']: ''),
-				'place' => Configuration::get('TNT_CARRIER_SHIPPING_ADDRESS1')." ".Configuration::get('TNT_CARRIER_SHIPPING_ADDRESS2')."<br/>".Configuration::get('TNT_CARRIER_SHIPPING_ZIPCODE')." ".$this->putCityInNormeTnt(Configuration::get('TNT_CARRIER_SHIPPING_CITY')));
+				'place' => Configuration::get('TNT_CARRIER_SHIPPING_COMPANY')."<br/>".Configuration::get('TNT_CARRIER_SHIPPING_ADDRESS1')." ".Configuration::get('TNT_CARRIER_SHIPPING_ADDRESS2')."<br/>".Configuration::get('TNT_CARRIER_SHIPPING_ZIPCODE')." ".Configuration::get('TNT_CARRIER_SHIPPING_CITY'));
 			$smarty->assign('var', $var);
 			return $this->display( __FILE__, 'tpl/shippingNumber.tpl' );
 		}
@@ -1155,7 +1175,7 @@ class TntCarrier extends CarrierModule
 			return false;
 		if (!extension_loaded('soap'))
 			return false;
-		
+
 		$product = $params->getProducts();
 		$weight = 0;
 		$add = 0;
@@ -1167,7 +1187,7 @@ class TntCarrier extends CarrierModule
 		$serviceCache = new serviceCache($params->id, $info['postcode'], $info['city'], $info['company'], Configuration::get('TNT_CARRIER_SHIPPING_ZIPCODE'), Configuration::get('TNT_CARRIER_SHIPPING_CITY'));
 		$serviceCache->clean();
 
-		if (!$serviceCache->getFaisabilityAtThisTime())
+		if (!$serviceCache->getFaisabilityAtThisTime() && !empty($info))
 		{
 			$serviceCache->deletePreviousServices();
 			$tntWebService = new TntWebService();
@@ -1177,7 +1197,10 @@ class TntCarrier extends CarrierModule
 			if ($info['company'] != '')
 				$typeDestinataire[] = 'ENTERPRISE';
 
-			$faisability = $tntWebService->getFaisability($typeDestinataire, $info['postcode'], $this->putCityInNormeTnt($info['city']), date("Y-m-d", strtotime("now")));//"2012-05-02");
+			$scity = $info['city'];
+			$scity = (strlen($scity) > 27 ? substr($scity, 0, 27) : $scity);
+
+			$faisability = $tntWebService->getFaisability($typeDestinataire, $info['postcode'], $scity, date("Y-m-d", strtotime("now")));//"2012-05-02");
 			if (!is_array($faisability) && strrpos($faisability, "(zip code / city)") === 0)
 				$serviceCache->errorCodePostal();
 			else if (is_array($faisability))
@@ -1221,7 +1244,7 @@ class TntCarrier extends CarrierModule
 						 'À'=>'A', 'Á'=>'A', 'Â'=>'A', 'Ã'=>'A', 'Ä'=>'A', 'Å'=>'A', 'Æ'=>'A', 'Ç'=>'C', 'È'=>'E', 'É'=>'E',
 						 'Ê'=>'E', 'Ë'=>'E', 'Ì'=>'I', 'Í'=>'I', 'Î'=>'I', 'Ï'=>'I', 'Ñ'=>'N', 'Ò'=>'O', 'Ó'=>'O', 'Ô'=>'O',
 						 'Õ'=>'O', 'Ö'=>'O', 'Ø'=>'O', 'Ù'=>'U', 'Ú'=>'U', 'Û'=>'U', 'Ü'=>'U', 'Ý'=>'Y', 'Þ'=>'B');
-	  $city =  mb_strtoupper($city);
+		$city = mb_strtoupper($city);
 		$city = strtr($city, $table);
 		$city = str_replace('-', ' ', $city);
 		return preg_replace('/SAINT\s+/', 'ST ', $city);

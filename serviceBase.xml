@@ -1,25 +1,29 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <serviceTNT>
 	<service>
-		<name>TNT Express au bureau</name>
+		<name>TNT 24h Bureau/Entreprise</name>
+		<url>http://www.tnt.fr/public/suivi_colis/recherche/visubontransport.do?radiochoixrecherche=BT&amp;bonTransport=@</url>
 		<description>TNT Express</description>
 		<descriptionfr>TNT 24h / Livraison 24h le lendemain avant 13h sur toute la France</descriptionfr>
 		<option>J</option>
 	</service>
 	<service>
-		<name><![CDATA[TNT Express à domicile]]></name>
-		<description>TNT 24h at home</description>
-		<descriptionfr>TNT 24h Chez Moi</descriptionfr>
+		<name>TNT 24h Chez Moi</name>
+		<url>http://www.tnt.fr/public/suivi_colis/recherche/visubontransport.do?radiochoixrecherche=BT&amp;bonTransport=@</url>
+		<description></description>
+		<descriptionfr></descriptionfr>
 		<option>JZ</option>
 	</service>
 	<service>
-		<name>TNT Express Relais Colis®</name>
-		<description><![CDATA[TNT 24h Relais Colis®]]></description>
-		<descriptionfr><![CDATA[TNT 24h Relais Colis®]]></descriptionfr>
+		<name>TNT 24h Relais Colis®</name>
+		<url>http://www.tnt.fr/public/suivi_colis/recherche/visubontransport.do?radiochoixrecherche=BT&amp;bonTransport=@</url>
+		<description></description>
+		<descriptionfr></descriptionfr>
 		<option>JD</option>
 	</service>
 	<service>
 		<name>TNT Express au bureau le samedi</name>
+		<url>http://www.tnt.fr/public/suivi_colis/recherche/visubontransport.do?radiochoixrecherche=BT&amp;bonTransport=@</url>
 		<description>TNT Express Saturday</description>
 		<descriptionfr>TNT 24h / Livraison 24h samedi avant 13h sur toute la France</descriptionfr>
 		<option>JS</option>
