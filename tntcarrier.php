@@ -1247,5 +1247,6 @@ class TntCarrier extends CarrierModule
 		$city = mb_strtoupper($city);
 		$city = strtr($city, $table);
 		$city = str_replace('-', ' ', $city);
+		return preg_replace('/SAINT\s+/', 'ST ', $city);
 	}
 }
