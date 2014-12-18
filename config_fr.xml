@@ -2,7 +2,7 @@
 <module>
 	<name>tntcarrier</name>
 	<displayName><![CDATA[TNT Express]]></displayName>
-	<version><![CDATA[1.9.12]]></version>
+	<version><![CDATA[1.9.13]]></version>
 	<description><![CDATA[La livraison express 24h partout en France avant 13h]]></description>
 	<author><![CDATA[PrestaShop]]></author>
 	<tab><![CDATA[shipping_logistics]]></tab>
