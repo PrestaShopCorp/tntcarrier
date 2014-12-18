@@ -25,7 +25,7 @@
 
 <script type="text/javascript" src="../modules/{$glob.module_name}/js/service.js"></script>
 <p>{l s='You can bill to your customers additionnal fees from the cost charged by TNT, according to the type of service, the region of France(ex: Corse) or the weight of the package' mod='tntcarrier'}</p><br/>
-<a href="index.php?tab={$glob.tab}&configure={$glob.configure}&token={$glob.token}&tab_module={$glob.tab_module}&module_name={$glob.module_name}&id_tab=3&section=service&action=new">
+<!--<a href="index.php?tab={$glob.tab}&configure={$glob.configure}&token={$glob.token}&tab_module={$glob.tab_module}&module_name={$glob.module_name}&id_tab=3&section=service&action=new">-->
 <br/>
 <table class="table" cellspacing="0" cellpading="0">
 	<tr>
