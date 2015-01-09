@@ -192,7 +192,7 @@ class TntWebService
 				'accessCode' => '',
 				'floorNumber' => '',
 				'buildingId' => '',
-				'sendNotification' => ''
+				'sendNotification' => '1'
 			);
 		else
 			$receiver = array(
@@ -208,7 +208,7 @@ class TntWebService
 				'accessCode' => '',
 				'floorNumber' => '',
 				'buildingId' => '',
-				'sendNotification' => ''
+				'sendNotification' => '1'
 			);
 
 		foreach ($info[1]['weight'] as $k => $v)

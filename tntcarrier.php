@@ -978,14 +978,11 @@ class TntCarrier extends CarrierModule
 		$output = null;
 		if (isset($this->context) && method_exists($this->context->controller, 'addJS'))
 		{	
-			$this->context->controller->addJS('http://maps.google.com/maps/api/js?sensor=true');
+			$this->context->controller->addJS('https://maps.google.com/maps/api/js?sensor=true');
 			$this->context->controller->addJS($this->_path.'js/relais.js');
 			$this->context->controller->addJS($this->_path.'js/jquery-ui-1.8.10.custom.min.js');
 			$this->context->controller->addCss($this->_path.'css/tntRelaisColis.css');
 		}
-		else
-			$smarty->assign('js_include', true);
-		
 
 		return $output.$this->display(__FILE__, 'tpl/relaisColis.tpl');
 	}
