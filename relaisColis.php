@@ -25,26 +25,26 @@
 */
 
 require('../../config/config.inc.php');
-$relais = Db::getInstance()->getValue('SELECT c.id_carrier 
-													FROM `'._DB_PREFIX_.'carrier` as c, `'._DB_PREFIX_.'tnt_carrier_option` as o 
-													WHERE c.id_carrier = o.id_carrier 
-													AND o.option LIKE "%D%" 
+$relais = Db::getInstance()->getValue('SELECT c.id_carrier
+													FROM `'._DB_PREFIX_.'carrier` as c, `'._DB_PREFIX_.'tnt_carrier_option` as o
+													WHERE c.id_carrier = o.id_carrier
+													AND o.option LIKE "%D%"
 													AND c.external_module_name = "tntcarrier"
 													AND c.deleted = "0" AND c.id_carrier = "'.(int)($_GET['id_carrier']).'"');
 
-$tnt_carrier = Db::getInstance()->getValue('SELECT c.id_carrier 
-													FROM `'._DB_PREFIX_.'carrier` as c, `'._DB_PREFIX_.'tnt_carrier_option` as o 
-													WHERE c.id_carrier = o.id_carrier 
+$tnt_carrier = Db::getInstance()->getValue('SELECT c.id_carrier
+													FROM `'._DB_PREFIX_.'carrier` as c, `'._DB_PREFIX_.'tnt_carrier_option` as o
+													WHERE c.id_carrier = o.id_carrier
 													AND c.deleted = "0" AND o.id_carrier = "'.(int)($_GET['id_carrier']).'"');
-$carrier_infos = Db::getInstance()->ExecuteS('SELECT * 
+$carrier_infos = Db::getInstance()->ExecuteS('SELECT *
 													FROM `'._DB_PREFIX_.'carrier` as c,`'._DB_PREFIX_.'carrier_lang` as l
 													WHERE c.id_carrier = l.id_carrier
 													AND c.id_carrier = "'.(int)($_GET['id_carrier']).'"');
-													
-$tnt_carrier_option = Db::getInstance()->getValue('SELECT o.option 
-													FROM `'._DB_PREFIX_.'tnt_carrier_option` as o 
+
+$tnt_carrier_option = Db::getInstance()->getValue('SELECT o.option
+													FROM `'._DB_PREFIX_.'tnt_carrier_option` as o
 													WHERE  o.id_carrier = "'.(int)($_GET['id_carrier']).'"');
-					
+
 ?><input id="tntRCSelectedType" type="hidden" value="<?php echo $tnt_carrier_option; ?>"><?php
 
 function phoneForm($mob, $tel)
@@ -82,7 +82,7 @@ if ($tnt_carrier !== false)
 		$description = $carrier_infos[0]['name'].' '.$carrier_infos[0]['delay'];
 
 		echo '<h3 class="descr">'.$description.'</h3>';
-							
+
 		if ($relais !== false)
 		{
 			?>
@@ -100,13 +100,13 @@ if ($tnt_carrier !== false)
 			<div id="map_canvas" class="exemplePresentation" ></div>
 			<?php
 		}
-		
+
 		phoneForm($mob, $tel);
 	}
 	else
 	{
 		phoneForm($mob, $tel);
-	
+
 		if ($relais !== false)
 		{
 			?>
@@ -122,7 +122,7 @@ if ($tnt_carrier !== false)
 			<?php
 		}
 	}
-	
+
 }
 
 ?>
