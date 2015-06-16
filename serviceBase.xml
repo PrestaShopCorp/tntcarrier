@@ -15,7 +15,7 @@
 		<option>JZ</option>
 	</service>
 	<service>
-		<name>![CDATA[TNT Express Relais Colis®]]</name>
+		<name><![CDATA[TNT Express Relais Colis®]]></name>
 		<url>http://www.tnt.fr/public/suivi_colis/recherche/visubontransport.do?radiochoixrecherche=BT&amp;bonTransport=@</url>
 		<description><![CDATA[24h Relais Colis®]]></description>
 		<descriptionfr><![CDATA[24h Relais Colis®]]></descriptionfr>
