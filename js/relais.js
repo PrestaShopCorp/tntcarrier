@@ -46,7 +46,7 @@ function tntRCgetRelaisColis(commune)
 	}
 	// Affichage message "chargement en cours"
 	//tntRCsetChargementEnCours();
-
+8
 	var ajaxUrl;
 	var ajaxData;
 
@@ -249,11 +249,12 @@ function listeRelais(tabRelais)
 			}
 		},
 		complete: function(data) {
+			var response = (data.responseText.length ? data.responseText : oRelais[0]);
 			oRelais = tntRClisteRelais[$("#tr_carrier_relais input:checked").index() - 1];
 			$.ajax({
 				type: "POST",
 				url: baseDir + "/modules/tntcarrier/relaisColis/postRelaisData.php",
-				data: "id_cart="+id_cart+"&tntRCSelectedCode="+oRelais[0]+"&tntRCSelectedNom="+oRelais[1]+"&tntRCSelectedAdresse="+oRelais[4]+"&tntRCSelectedCodePostal="+oRelais[2]+"&tntRCSelectedCommune="+oRelais[3]
+				data: "id_cart="+id_cart+"&tntRCSelectedCode="+response+"&tntRCSelectedNom="+oRelais[1]+"&tntRCSelectedAdresse="+oRelais[4]+"&tntRCSelectedCodePostal="+oRelais[2]+"&tntRCSelectedCommune="+oRelais[3]
 			});
 		}
 	});
