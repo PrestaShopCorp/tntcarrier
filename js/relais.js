@@ -169,7 +169,6 @@ function afficheDetail(i)
 		$('#tntRCDetail'+i).hide('slow');
 	else
 		$('#tntRCDetail'+i).show('slow');
-
 }
 
 function listeRelais(tabRelais)
@@ -226,7 +225,9 @@ function listeRelais(tabRelais)
 					"<img onclick='afficheDetail(" + i + ");' style='vertical-align:middle;cursor:pointer' src='"+baseDir+"/modules/tntcarrier/img/loupe.gif' class='tntRCBoutonLoupe'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
 					"<input type='radio' style='vertical-align: middle;margin-left:0px' name='tntRCchoixRelais' value='"+codeRelais+"'"+(i==0 ? "checked" : "")+" onclick='tntRCSetSelectedInfo("+i+")'/>"+
 				"</td>"+
-			"</tr>"
+				"</tr>" +
+				"<td colspan='6'><table style='display:none;' id='tntRCDetail"+i+"'><tr><td>lundi : "+lundi_am+"</td><td>mardi : "+mardi_am+"</td><td>mercredi : "+mercredi_am+"</td><td>jeudi : "+jeudi_am+"</td><td>vendredi : "+vendredi_am+"</td><td>samedi : "+samedi_am+"</td><td>dimanche : "+dimanche_am+"</td></tr></table></td>"
+
 			);
 	}
 
