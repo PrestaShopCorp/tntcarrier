@@ -96,7 +96,7 @@ if ($tnt_carrier !== false)
 					<input id="tntRCInputCP" class="tntRCInput" type="text" value="<?php echo $postcode;?>" size="5" maxlength="5">
 					 <button type="button" class="button" onclick="tntRCgetCommunes();">Ok</button><br/></div>
 			</div>
-			<div id="relaisColisResponse" style="width: 50%;"></div>
+			<div id="relaisColisResponse"></div>
 			<div id="map_canvas" class="exemplePresentation" ></div>
 			<?php
 		}
@@ -117,7 +117,7 @@ if ($tnt_carrier !== false)
 			<input id="tntRCSelectedCommune" type="hidden" value="">
 			<h3>Choisissez le Relais Colis<sup class="tntRCSup">&reg;</sup>qui vous convient :</h3>
 				<div class='tntchoixCP'><label>Entrez le code postal : </label><input id="tntRCInputCP" class="tntRCInput" type="text" value="<?php echo $postcode;?>" size="5" maxlength="5"> <button type="button" class="button" onclick="tntRCgetCommunes();">Ok</button></div><br/>
-			<div id="relaisColisResponse" style="width: 50%;"></div>
+			<div id="relaisColisResponse"></div>
 			<div id="map_canvas" class="exemplePresentation"></div>
 			<?php
 		}
