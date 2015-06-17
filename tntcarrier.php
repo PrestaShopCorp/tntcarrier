@@ -963,7 +963,7 @@ class TntCarrier extends CarrierModule
 		}
 		$services = Db::getInstance()->ExecuteS('SELECT `id_carrier`, `option` FROM `'._DB_PREFIX_.'tnt_carrier_option`');
 		$dueDate = serviceCache::getDueDate($id_cart, $services);
-		
+
 		$smarty->assign(
 			array(
 				'shop_url' => Tools::getShopDomainSsl(true, true).__PS_BASE_URI__,
@@ -977,10 +977,10 @@ class TntCarrier extends CarrierModule
 
 		$output = null;
 		if (isset($this->context) && method_exists($this->context->controller, 'addJS'))
-		{	
+		{
 			$this->context->controller->addJS('https://maps.google.com/maps/api/js?sensor=true');
 			$this->context->controller->addJS($this->_path.'js/relais.js');
-			$this->context->controller->addJS($this->_path.'js/jquery-ui-1.8.10.custom.min.js');
+			$this->context->controller->addJS($this->_path.'js/jquery-ui.js');
 			$this->context->controller->addCss($this->_path.'css/tntRelaisColis.css');
 		}
 
@@ -1109,6 +1109,7 @@ class TntCarrier extends CarrierModule
 				'error' => '',
 				'shipping_numbers' => $pack->getShippingNumber(),
 				'sticker' => "../modules/".$this->_moduleName.'/pdf/'.$pack->getOrder()->shipping_number.'.pdf',
+				'customer' => $info[0]['address1'].' '.$info[0]['address2'].'<br/>'.$info[0]['postcode'].' '.$info[0]['city'],
 				'date' => Db::getInstance()->getValue('SELECT `pickup_date` FROM `'._DB_PREFIX_.'tnt_package_history` WHERE `id_order` = "'.(int)$params['id_order'].'"'),
 				'relay' => (isset($info[4]) ? $info[4]['name'].'<br/>'.$info[4]['address'].'<br/>'.$info[4]['zipcode'].' '.$info[4]['city']: ''),
 				'place' => Configuration::get('TNT_CARRIER_SHIPPING_COMPANY')."<br/>".Configuration::get('TNT_CARRIER_SHIPPING_ADDRESS1')." ".Configuration::get('TNT_CARRIER_SHIPPING_ADDRESS2')."<br/>".Configuration::get('TNT_CARRIER_SHIPPING_ZIPCODE')." ".Configuration::get('TNT_CARRIER_SHIPPING_CITY'));

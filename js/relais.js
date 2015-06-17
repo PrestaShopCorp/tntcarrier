@@ -14,17 +14,16 @@ function postMobile(token)
 {
 	var id = $("#id_cart").val();
 	var ph = $("#mobileTnt").val();
-	
+
 	$.get(baseDir+"/modules/tntcarrier/relaisColis/postMobileData.php?id_cart="+id+"&phone="+ph+"&token="+token);
 }
-	
+
 function resetMap() {
-	
+
 	if (map) {
-		
+
 		map.getStreetView().setVisible(false);
-		
-		for (var i = 0; i < relaisMarkers.length; i++) { 
+		for (var i = 0; i < relaisMarkers.length; i++) {
 			relaisMarkers[i].setMap(null);
 			relaisMarkers[i] = null;
 		}
@@ -32,7 +31,7 @@ function resetMap() {
 		if (infowindow) infowindow.close();
 		map.setZoom(defaultZoom);
 		map.setCenter(defaultCenter);
-	}	
+	}
 }
 
 function tntRCgetRelaisColis(commune)
@@ -47,13 +46,13 @@ function tntRCgetRelaisColis(commune)
 	}
 	// Affichage message "chargement en cours"
 	//tntRCsetChargementEnCours();
-	
+8
 	var ajaxUrl;
 	var ajaxData;
 
 	ajaxUrl = "https://www.tnt.fr/public/b2c/relaisColis/loadJson.do?cp=" + tntRCcodePostal + "&commune=" + tntRCCommune;
 	ajaxData = "";
-	
+
 	// Chargement de la liste de relais colis
 	$.ajax({
 	   type: "GET",
@@ -62,12 +61,12 @@ function tntRCgetRelaisColis(commune)
 	   dataType: "script"
 	});
 }
-		
+
 function		tntRCgetCommunes()
 {
 	tntRCcodePostal = $('#tntRCInputCP').val();
 
-	// Code postal non renseigné, on ne fait rien 
+	// Code postal non renseigné, on ne fait rien
 	if (tntRCcodePostal=="") return;
 
 	if (mapDetected) resetMap();
@@ -102,14 +101,17 @@ function tntRCSetSelectedInfo(selectedIdx, noMarkerInfo)
 	$("#tntRCSelectedCodePostal").val(oRelais[2]);
 	$("#tntRCSelectedCommune").val(oRelais[3]);
 	var id_cart = document.getElementById("cartRelaisColis").value;
-	$.ajax({
-	   type: "POST",
-	   url: baseDir+"/modules/tntcarrier/relaisColis/postRelaisData.php",
-	   data: "id_cart="+id_cart+"&tntRCSelectedCode="+oRelais[0]+"&tntRCSelectedNom="+oRelais[1]+"&tntRCSelectedAdresse="+oRelais[4]+"&tntRCSelectedCodePostal="+oRelais[2]+"&tntRCSelectedCommune="+oRelais[3]
-	});
-	
+	if (selectedIdx)
+	{
+		$.ajax({
+			type: "POST",
+			url: baseDir+"/modules/tntcarrier/relaisColis/postRelaisData.php",
+			data: "id_cart="+id_cart+"&tntRCSelectedCode="+oRelais[0]+"&tntRCSelectedNom="+oRelais[1]+"&tntRCSelectedAdresse="+oRelais[4]+"&tntRCSelectedCodePostal="+oRelais[2]+"&tntRCSelectedCommune="+oRelais[3]
+		});
+	}
+
 	if (mapDetected && !noMarkerInfo) {
-		
+
 		// Les noeuds dans le fichier XML ne sont pas forcément ordonnés pour l'affichage, on va donc d'abord récupérer leur valeur
 		var codeRelais = oRelais[0]
 		var nomRelais = oRelais[1];
@@ -133,7 +135,7 @@ function tntRCSetSelectedInfo(selectedIdx, noMarkerInfo)
 		var samedi_pm = oRelais[18];
 		var dimanche_am = (oRelais[19] == "-")?",":oRelais[19]+",";
 		var dimanche_pm = oRelais[20];
-		
+
 		if (lundi_pm != "-") lundi_am = lundi_am + lundi_pm;
 		if (mardi_pm != "-") mardi_am = mardi_am + mardi_pm;
 		if (mercredi_pm != "-") mercredi_am = mercredi_am + mercredi_pm;
@@ -141,7 +143,7 @@ function tntRCSetSelectedInfo(selectedIdx, noMarkerInfo)
 		if (vendredi_pm != "-") vendredi_am = vendredi_am + vendredi_pm;
 		if (samedi_pm != "-") samedi_am = samedi_am + samedi_pm;
 		if (dimanche_pm != "-") dimanche_am = dimanche_am + dimanche_pm;
-		
+
 		var horaires = new Array();
 		horaires['lundi'] = lundi_am + ",1";
 		horaires['mardi'] = mardi_am + ",2";
@@ -150,7 +152,7 @@ function tntRCSetSelectedInfo(selectedIdx, noMarkerInfo)
 		horaires['vendredi'] = vendredi_am + ",5";
 		horaires['samedi'] = samedi_am + ",6";
 		horaires['dimanche'] = dimanche_am + ",0";
-		
+
 		var messages = "";
 		for (j=0; j < oRelais[24].length; j++) {
 			var ligne = oRelais[24][j];
@@ -167,7 +169,6 @@ function afficheDetail(i)
 		$('#tntRCDetail'+i).hide('slow');
 	else
 		$('#tntRCDetail'+i).show('slow');
-	
 }
 
 function listeRelais(tabRelais)
@@ -175,13 +176,13 @@ function listeRelais(tabRelais)
 	var jData = tabRelais;
 	var jMessage = $('#relaisColisResponse');
 	var tntRCjTable = $("<table style='width:100%;border:1px solid gray;' cellpadding='2px' cellspacing='0'></table>");
-	
+
 	jMessage.html("");
 	tntRCjTable.append("<tr style='background:#999;color:white;height:24px;padding:4px'><th class='tntRCgris' width=''>&nbsp;Les diff&eacute;rents Relais Colis&#174;</th><th class='tntRCgris' width=''>Mon choix</th></tr>");
 	var i = 0;
 	tntRClisteRelais = jData;
 	for(i = 0; i < jData.length; i++) {
-			
+
 		var oRelais = jData[i];
 		var codeRelais = oRelais[0];
 		var nomRelais = oRelais[1];
@@ -189,7 +190,7 @@ function listeRelais(tabRelais)
 		var codePostal = oRelais[2];
 		var commune = oRelais[3];
 		var heureFermeture = oRelais[21];
-		
+
 		var lundi_am = (oRelais[7] == "-")?"ferm&#233;":oRelais[7];
 		var lundi_pm = (oRelais[8] == "-")?"ferm&#233;":oRelais[8];
 		var mardi_am = (oRelais[9] == "-")?"ferm&#233;":oRelais[9];
@@ -204,7 +205,7 @@ function listeRelais(tabRelais)
 		var samedi_pm = (oRelais[18] == "-")?"ferm&#233;":oRelais[18];
 		var dimanche_am = (oRelais[19] == "-")?"ferm&#233;":oRelais[19];
 		var dimanche_pm = (oRelais[20] == "-")?"ferm&#233;":oRelais[20];
-		
+
 		if (lundi_pm != "-") lundi_am = lundi_am + "<br/>" + lundi_pm;
 		if (mardi_pm != "-") mardi_am = mardi_am + "<br/>" + mardi_pm;
 		if (mercredi_pm != "-") mercredi_am = mercredi_am + "<br/>" + mercredi_pm;
@@ -213,10 +214,10 @@ function listeRelais(tabRelais)
 		if (samedi_pm != "-") samedi_am = samedi_am + "<br/>" + samedi_pm;
 		if (dimanche_pm != "-") dimanche_am = dimanche_am + "<br/>" + dimanche_pm;
 
-		var messages="";			
+		var messages="";
 		var logo_point = "";
 		if (messages != "") logo_point = "<img src='"+baseDir+"/modules/tntcarrier/img/exception.gif' alt='Informations compl&#233;mentaires' width='16px' height='16px'>";
-		
+
 		tntRCjTable.append(
 			"<tr>"+
 				"<td style='font-size:10px; padding:0px' class='tntRCrelaisColis' width=''>&nbsp;&nbsp;&nbsp;"+nomRelais+" - "+adresse+" - "+codePostal+" - "+commune+"<BR>&nbsp;&nbsp;&nbsp;&nbsp;>> Ouvert jusqu'&agrave; "+heureFermeture+"</td>"+
@@ -224,19 +225,43 @@ function listeRelais(tabRelais)
 					"<img onclick='afficheDetail(" + i + ");' style='vertical-align:middle;cursor:pointer' src='"+baseDir+"/modules/tntcarrier/img/loupe.gif' class='tntRCBoutonLoupe'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
 					"<input type='radio' style='vertical-align: middle;margin-left:0px' name='tntRCchoixRelais' value='"+codeRelais+"'"+(i==0 ? "checked" : "")+" onclick='tntRCSetSelectedInfo("+i+")'/>"+
 				"</td>"+
-			"</tr>"
+				"</tr>" +
+				"<td colspan='6'><table style='display:none;' id='tntRCDetail"+i+"'><tr><td>lundi : "+lundi_am+"</td><td>mardi : "+mardi_am+"</td><td>mercredi : "+mercredi_am+"</td><td>jeudi : "+jeudi_am+"</td><td>vendredi : "+vendredi_am+"</td><td>samedi : "+samedi_am+"</td><td>dimanche : "+dimanche_am+"</td></tr></table></td>"
+
 			);
 	}
-	
-	// Mémorisation des infos du relais sélectionné par défaut (c'est le premier)		
+
+	// Mémorisation des infos du relais sélectionné par défaut (c'est le premier)
 	tntRCSetSelectedInfo(0, true);
 	// Ajout du lien de retour sur la liste des communes si cette dernière a été mémorisée
-	
+
 	jMessage.append(tntRCjTable);
 	if (mapDetected) init_marker(tabRelais);
+
+	var id_cart = document.getElementById("cartRelaisColis").value;
+	$.ajax({
+		type: "POST",
+		url: baseDir + "/modules/tntcarrier/relaisColis/getRelaisData.php",
+		success: function (data) {
+			if (data !== 'ko' && $("#tr_carrier_relais input[value="+data+"]").length) {
+				$("#tr_carrier_relais input:checked").attr('checked', false);
+				$("#tr_carrier_relais input[value="+data+"]").attr('checked', true);
+			}
+		},
+		complete: function(data) {
+			var response = (data.responseText.length ? data.responseText : oRelais[0]);
+			oRelais = tntRClisteRelais[$("#tr_carrier_relais input:checked").index() - 1];
+			$.ajax({
+				type: "POST",
+				url: baseDir + "/modules/tntcarrier/relaisColis/postRelaisData.php",
+				data: "id_cart="+id_cart+"&tntRCSelectedCode="+response+"&tntRCSelectedNom="+oRelais[1]+"&tntRCSelectedAdresse="+oRelais[4]+"&tntRCSelectedCodePostal="+oRelais[2]+"&tntRCSelectedCommune="+oRelais[3]
+			});
+		}
+	});
+
 }
 
-function listeCommunes(tabCommunes) 
+function listeCommunes(tabCommunes)
 {
 	// RAZ des infos sélectionnées
 	tntRCSetSelectedInfo();
@@ -247,13 +272,13 @@ function listeCommunes(tabCommunes)
 
 	var jData = tabCommunes;
 	var blocCodePostal = $('#relaisColisResponse');
-	
+
 	var i = 1;
 	//var jCommunes = jData.find("VILLE");
 	for (var iIdx = 0; iIdx < jData.length; iIdx++) {
-		
+
 		var commune = jData[iIdx];
-		
+
 		//var jCommune = $(this);
 		var nomVille = commune[1]; // IE vs FF
 
@@ -266,18 +291,18 @@ function listeCommunes(tabCommunes)
 			"</tr>");
 		i = 2;
 	}
-	
+
 	tntRCjTable.append(
-		"<tr>"+	
+		"<tr>"+
 			"<td class='tntRCblanc' width='' style='padding:2px;'></td>"+
 			"<td class='tntRCblanc' align='center' width='' style='padding:3px;'>"+
 				"<a href='javascript:tntRCgetRelaisColis();'><img class='tntRCButton' src='"+baseDir+"/modules/tntcarrier/img/bt-Continuer-2.jpg' onmouseover='this.src=\""+baseDir+"/modules/tntcarrier/img/bt-Continuer-1.jpg\"' onmouseout='this.src=\""+baseDir+"/modules/tntcarrier/img/bt-Continuer-2.jpg\"'></a>" +
 			"</td>"+
 		"</tr>");
-	
-	blocCodePostal.html(tntRCjTable);	
-	
-	// Bloc de saisie d'un nouveau code postal			
+
+	blocCodePostal.html(tntRCjTable);
+
+	// Bloc de saisie d'un nouveau code postal
     //blocCodePostal.append(tntRCchangerCodePostal());
 }
 
@@ -311,7 +336,7 @@ var contentTo = [
                      '<input type="submit" onclick="return popup_roadmap();" value="Ok">',
                      '<br/>Ex: 58 avenue Leclerc 69007 Lyon',
                  '</div>'].join('');
-     
+
 var contentFrom = [
                   '<br/><div>',
                       'Itin&#233;raire : <a href="javascript:tohere(0)">Vers ce lieu</a> - <b>A partir de ce lieu</b><br/>',
@@ -327,14 +352,14 @@ var infowindow;
 
 var relaisMarkers = [];
 var iconRelais = new google.maps.MarkerImage(
-		baseDir+"/modules/tntcarrier/img/google/relaisColis.png", 
-		new google.maps.Size(40, 30), 
-		new google.maps.Point(0, 0), 
+		baseDir+"/modules/tntcarrier/img/google/relaisColis.png",
+		new google.maps.Size(40, 30),
+		new google.maps.Point(0, 0),
 		new google.maps.Point(20, 30))
 
 //Limites de la France
 var allowedBounds = new google.maps.LatLngBounds(
-		new google.maps.LatLng(39.56533418570851, -7.41426946590909), 
+		new google.maps.LatLng(39.56533418570851, -7.41426946590909),
 		new google.maps.LatLng(52.88994181429149, 11.84176746590909));
 
 var defaultCenter = new google.maps.LatLng(46.2276380, 2.2137490); // the center ???
@@ -348,37 +373,37 @@ var callbackLinkMarker = "";
 
 // fonction appellé après saisie du code postal de recherche
 function init_marker(json) {
-	
+
 	zone_chalandise = new google.maps.LatLngBounds();
-	
-	for (var i = 0; i < relaisMarkers.length; i++) { 
+
+	for (var i = 0; i < relaisMarkers.length; i++) {
 		relaisMarkers[i].setMap(null);
 		relaisMarkers[i] = null;
 	}
 	relaisMarkers = new Array();
-	
+
 	if (infowindow) infowindow.close();
-	
+
 	var markers = json;
-	
+
 	for (var i = 0; i < markers.length; i++) {
 		createMarker(markers[i], i);
 	}
-	
+
 	zoomZoneChalandiseDefault = zone_chalandise.getCenter();
 	centerZoneChalandiseDefault = zone_chalandise;
-	
+
 	retourZoomChalandise();
 }
 
 function setInfoMarker(codeRelais, nomRelais, adresse, codePostal, commune, messages, indice, horaires, marker) {
-	
+
 	var htmlInfo = [
 		"<div>",
 			"<div class='rc'>",
 				"<b>RELAIS COLIS N\260 ", codeRelais, "</b><br/>",
-				"<b>", nomRelais, "</b><br/>", 
-				adresse, "<br/>", 
+				"<b>", nomRelais, "</b><br/>",
+				adresse, "<br/>",
 				codePostal, " ", commune,
 			"</div>",
 			"<div><br/>", messages, "</div>",
@@ -396,9 +421,9 @@ function setInfoMarker(codeRelais, nomRelais, adresse, codePostal, commune, mess
 		htmlHoraires = htmlHoraires  + "<tr" + (jourSemaine == parseInt(heures[2]) ? " class='selected'" : "") + "><td class='horairesRCJourPopup'>&nbsp;" + jour + "</td><td class='horaireRCPopup'>" + heures[0] + " " + heures[1] + "</td></tr>";
 	}
 	htmlHoraires = htmlHoraires + "</table>";
-	
+
 	adresse_pointclic = [adresse, "|", codePostal, " ", commune].join('');
-	
+
 	var contentString = [
          '<div id="tabs" style="width:340px;">',
          '<ul>',
@@ -417,7 +442,7 @@ function setInfoMarker(codeRelais, nomRelais, adresse, codePostal, commune, mess
     if (infowindow) infowindow.close();
     infowindow = new google.maps.InfoWindow({content: contentString});
 
-	google.maps.event.addListener(infowindow, "domready", function() {  
+	google.maps.event.addListener(infowindow, "domready", function() {
 		$("#point_choisi").attr("value", adresse_pointclic);
 		$("#tabs").tabs();
 		$("#tabs").parent().removeAttr("style");
@@ -427,14 +452,14 @@ function setInfoMarker(codeRelais, nomRelais, adresse, codePostal, commune, mess
 }
 
 function createMarker(markerData, indice) {
-	
+
 	var marker = new google.maps.Marker({
 		icon: iconRelais,
 		position: new google.maps.LatLng(markerData[5], markerData[6]),
 		map: map,
 		title:markerData[1]
 	});
-	
+
 	google.maps.event.addListener(marker, "click", function() {
 		// Sélectionne le relais correspondant dans la liste
 		$("input[type=radio][name=tntRCchoixRelais]:eq("+ indice + ")").attr("checked", true);
@@ -446,21 +471,21 @@ function createMarker(markerData, indice) {
 }
 
 
-function tntRCInitMap() 
+function tntRCInitMap()
 {
 	// Si la carte n'est pas présente, fin de l'initialisation
 	if (!document.getElementById("map_canvas")) return;
 	mapDetected = true;
-	
+
 	// Si une fonction de callback a été définie, un lien est ajouté
  	// dans la popup d'info du marqueur de relais colis
 	if (window.callbackSelectionRelais) callbackLinkMarker = "<a onclick='callbackSelectionRelais();' href='#' style='color:#FF6600'>Choisir ce relais</a>";
-	
+
 	//Ajout du lien pour retour en zoom zone de chalandise
 	var jMapCanvas = $("#map_canvas");
 	jMapCanvas.wrap("<div></div>");
-	
-	var mapClass = jMapCanvas.attr("class"); 
+
+	var mapClass = jMapCanvas.attr("class");
 	if (mapClass && mapClass != "") {
 		jMapCanvas.attr("class", "");
 		jMapCanvas.parent().attr("class", mapClass);
@@ -488,26 +513,26 @@ function tntRCInitMap()
 		var C = map.getCenter(); // current center coords
 		var X = C.lng();
 		var Y = C.lat();
-	
+
 		// now check if the current rectangle in the allowed area
 		var checkSW = new google.maps.LatLng(C.lat()-offsetY,C.lng()-offsetX);
 		var checkNE = new google.maps.LatLng(C.lat()+offsetY,C.lng()+offsetX);
-		
+
 		if (allowedBounds.contains(checkSW) &&
 			allowedBounds.contains(checkNE)) {
 			return; // nothing to do
 		}
-	
+
 		var AmaxX = allowedBounds.getNorthEast().lng();
 		var AmaxY = allowedBounds.getNorthEast().lat();
 		var AminX = allowedBounds.getSouthWest().lng();
 		var AminY = allowedBounds.getSouthWest().lat();
-	
+
 		if (X < (AminX+offsetX)) {X = AminX + offsetX;}
 		if (X > (AmaxX-offsetX)) {X = AmaxX - offsetX;}
 		if (Y < (AminY+offsetY)) {Y = AminY + offsetY;}
 		if (Y > (AmaxY-offsetY)) {Y = AmaxY - offsetY;}
-	
+
 		map.setCenter(new google.maps.LatLng(Y,X));
 		return;
     }
@@ -524,12 +549,12 @@ function tntRCInitMap()
 		//premier accès lors du chargement de la page, il ne faut pas cacher les markers
 		if (init_streetview == true) {
 			if(map.getStreetView().getVisible() == true) {
-				for (var k = 0; k < relaisMarkers.length; k++) { 
+				for (var k = 0; k < relaisMarkers.length; k++) {
 					relaisMarkers[k].setVisible(false);
 				}
 			}
 			else {
-				for (var k = 0; k < relaisMarkers.length; k++) { 
+				for (var k = 0; k < relaisMarkers.length; k++) {
 					relaisMarkers[k].setVisible(true);
 				}
 			}
