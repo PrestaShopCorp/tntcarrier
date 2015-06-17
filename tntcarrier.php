@@ -980,8 +980,13 @@ class TntCarrier extends CarrierModule
 		{
 			$this->context->controller->addJS('https://maps.google.com/maps/api/js?sensor=true');
 			$this->context->controller->addJS($this->_path.'js/relais.js');
-			$this->context->controller->addJS($this->_path.'js/jquery-ui.js');
 			$this->context->controller->addCss($this->_path.'css/tntRelaisColis.css');
+
+			if (version_compare(_PS_VERSION_, '1.5', '<'))
+				$this->context->controller->addJS($this->_path.'js/jquery-ui.js');
+			else
+				$this->context->controller->addJqueryUI('ui.tabs');
+
 		}
 
 		return $output.$this->display(__FILE__, 'tpl/relaisColis.tpl');
