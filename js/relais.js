@@ -253,7 +253,7 @@ function listeRelais(tabRelais)
 			oRelais = tntRClisteRelais[$("#tr_carrier_relais input:checked").index() - 1];
 			$.ajax({
 				type: "POST",
-				url: baseDir + "/modules/tntcarrier/relaisColis/postRelaisData.php",
+				url: baseDir + "modules/tntcarrier/relaisColis/postRelaisData.php",
 				data: "id_cart="+id_cart+"&tntRCSelectedCode="+response+"&tntRCSelectedNom="+oRelais[1]+"&tntRCSelectedAdresse="+oRelais[4]+"&tntRCSelectedCodePostal="+oRelais[2]+"&tntRCSelectedCommune="+oRelais[3]
 			});
 		}
