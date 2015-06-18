@@ -8,6 +8,7 @@ $("#form").submit(function()
 			alert("Vous n\'avez pas choisi de relais colis");
 			return false;
 		}
+		return true;
 	});
 
 function postMobile(token)
@@ -46,7 +47,7 @@ function tntRCgetRelaisColis(commune)
 	}
 	// Affichage message "chargement en cours"
 	//tntRCsetChargementEnCours();
-8
+
 	var ajaxUrl;
 	var ajaxData;
 
@@ -91,7 +92,7 @@ function tntRCSetSelectedInfo(selectedIdx, noMarkerInfo)
 		$("#tntRCSelectedAdresse").val("");
 		$("#tntRCSelectedCodePostal").val("");
 		$("#tntRCSelectedCommune").val("");
-		return
+		return;
 	}
 	var oRelais = tntRClisteRelais[selectedIdx];
 
@@ -113,7 +114,7 @@ function tntRCSetSelectedInfo(selectedIdx, noMarkerInfo)
 	if (mapDetected && !noMarkerInfo) {
 
 		// Les noeuds dans le fichier XML ne sont pas forcément ordonnés pour l'affichage, on va donc d'abord récupérer leur valeur
-		var codeRelais = oRelais[0]
+		var codeRelais = oRelais[0];
 		var nomRelais = oRelais[1];
 		var adresse = oRelais[4];
 		var codePostal = oRelais[2];
@@ -153,7 +154,7 @@ function tntRCSetSelectedInfo(selectedIdx, noMarkerInfo)
 		horaires['samedi'] = samedi_am + ",6";
 		horaires['dimanche'] = dimanche_am + ",0";
 
-		var messages = "";
+		messages = "";
 		for (j=0; j < oRelais[24].length; j++) {
 			var ligne = oRelais[24][j];
 			if (ligne != "") messages = messages + ligne + "<br/>";
@@ -352,10 +353,10 @@ var infowindow;
 
 var relaisMarkers = [];
 var iconRelais = new google.maps.MarkerImage(
-		baseDir+"/modules/tntcarrier/img/google/relaisColis.png",
-		new google.maps.Size(40, 30),
-		new google.maps.Point(0, 0),
-		new google.maps.Point(20, 30))
+	baseDir+"/modules/tntcarrier/img/google/relaisColis.png",
+	new google.maps.Size(40, 30),
+	new google.maps.Point(0, 0),
+	new google.maps.Point(20, 30));
 
 //Limites de la France
 var allowedBounds = new google.maps.LatLngBounds(
@@ -422,7 +423,7 @@ function setInfoMarker(codeRelais, nomRelais, adresse, codePostal, commune, mess
 	}
 	htmlHoraires = htmlHoraires + "</table>";
 
-	adresse_pointclic = [adresse, "|", codePostal, " ", commune].join('');
+	Adresse_pointclic = [adresse, "|", codePostal, " ", commune].join('');
 
 	var contentString = [
          '<div id="tabs" style="width:340px;">',
