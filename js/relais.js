@@ -63,7 +63,7 @@ function tntRCgetRelaisColis(commune)
 	});
 }
 
-function		tntRCgetCommunes()
+function tntRCgetCommunes()
 {
 	tntRCcodePostal = $('#tntRCInputCP').val();
 
