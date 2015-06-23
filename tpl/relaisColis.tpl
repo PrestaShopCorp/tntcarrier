@@ -240,7 +240,7 @@ function displayNewTable(response, id)
 	function displayNewHelpCarrier(src)
 	{
 		$('#tntHelpCarrier').remove();
-		$( document ).after("<div id='tntHelpCarrier'><div id='helpCarrierBlock' style='text-align:center;position:relative'><div style='width:930px;margin:auto;background-color:white;border-radius:10px;'><span class='button btn' onclick='hideNewHelpCarrier()' style='float:right;margin-right:37px;'>{/literal}{l s='Close' mod='tntcarrier'}{literal}</span><br/><iframe id='helpCarrierFrame' style='height:500px;width:900px;border:none;margin-top:5px;overflow-x:hidden;overflow-y: scroll;'></iframe></div></div></div>");
+		$( 'body' ).append("<div id='tntHelpCarrier'><div id='helpCarrierBlock' style='text-align:center;position:relative'><div style='width:930px;margin:auto;background-color:white;border-radius:10px;'><span class='button btn' onclick='hideNewHelpCarrier()' style='float:right;margin-right:37px;'>{/literal}{l s='Close' mod='tntcarrier'}{literal}</span><br/><iframe id='helpCarrierFrame' style='height:500px;width:900px;border:none;margin-top:5px;overflow-x:hidden;overflow-y: scroll;'></iframe></div></div></div>");
 		$("#tntHelpCarrier").css('height', $(document).height()+'px');
 		$("#tntHelpCarrier").css('width', $(document).width()+'px');
 		$("#tntHelpCarrier").css('background', 'url({/literal}{$shop_url}{literal}img/macFFBgHack.png)');
