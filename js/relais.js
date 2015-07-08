@@ -1,5 +1,6 @@
 var tntRCcodePostal;
 var tntRClisteRelais;
+var firstTry = true;
 
 $("#form").submit(function()
 	{
@@ -102,14 +103,26 @@ function tntRCSetSelectedInfo(selectedIdx, noMarkerInfo)
 	$("#tntRCSelectedCodePostal").val(oRelais[2]);
 	$("#tntRCSelectedCommune").val(oRelais[3]);
 	var id_cart = document.getElementById("cartRelaisColis").value;
-	if (selectedIdx)
-	{
-		$.ajax({
-			type: "POST",
-			url: baseDir+"/modules/tntcarrier/relaisColis/postRelaisData.php",
-			data: "id_cart="+id_cart+"&tntRCSelectedCode="+oRelais[0]+"&tntRCSelectedNom="+oRelais[1]+"&tntRCSelectedAdresse="+oRelais[4]+"&tntRCSelectedCodePostal="+oRelais[2]+"&tntRCSelectedCommune="+oRelais[3]
-		});
-	}
+	$.ajax({
+		type: "POST",
+		url: baseDir + "/modules/tntcarrier/relaisColis/getRelaisData.php",
+		success: function (data) {
+			if (data !== 'ko' && !firstTry) {
+				console.log('loop post: ' + oRelais[0]);
+				$.ajax({
+					type: "POST",
+					url: baseDir+"/modules/tntcarrier/relaisColis/postRelaisData.php",
+					data: "id_cart="+id_cart+"&tntRCSelectedCode="+oRelais[0]+"&tntRCSelectedNom="+oRelais[1]+"&tntRCSelectedAdresse="+oRelais[4]+"&tntRCSelectedCodePostal="+oRelais[2]+"&tntRCSelectedCommune="+oRelais[3]
+				});
+			}
+			else
+				console.log('first');
+		},
+		complete: function(data) {
+			firstTry = false;
+		}
+	});
+
 
 	if (mapDetected && !noMarkerInfo) {
 
@@ -239,27 +252,30 @@ function listeRelais(tabRelais)
 	jMessage.append(tntRCjTable);
 	if (mapDetected) init_marker(tabRelais);
 
+	console.log('start');
 	var id_cart = document.getElementById("cartRelaisColis").value;
 	$.ajax({
 		type: "POST",
 		url: baseDir + "/modules/tntcarrier/relaisColis/getRelaisData.php",
 		success: function (data) {
 			if (data !== 'ko' && $("#tr_carrier_relais input[value="+data+"]").length) {
+				console.log('start: set checkbox to ' + data);
 				$("#tr_carrier_relais input:checked").attr('checked', false);
 				$("#tr_carrier_relais input[value="+data+"]").attr('checked', true);
 			}
 		},
 		complete: function(data) {
-			var response = (data.responseText.length ? data.responseText : oRelais[0]);
-			oRelais = tntRClisteRelais[$("#tr_carrier_relais input:checked").index() - 1];
-			$.ajax({
-				type: "POST",
-				url: baseDir + "modules/tntcarrier/relaisColis/postRelaisData.php",
-				data: "id_cart="+id_cart+"&tntRCSelectedCode="+response+"&tntRCSelectedNom="+oRelais[1]+"&tntRCSelectedAdresse="+oRelais[4]+"&tntRCSelectedCodePostal="+oRelais[2]+"&tntRCSelectedCommune="+oRelais[3]
-			});
+			if (jData.length && data.responseText === 'ko') {
+				oRelais = jData[0];
+				console.log('start: init to ' + oRelais[0]);
+				$.ajax({
+					type: "POST",
+					url: baseDir + "modules/tntcarrier/relaisColis/postRelaisData.php",
+					data: "id_cart="+id_cart+"&tntRCSelectedCode="+oRelais[0]+"&tntRCSelectedNom="+oRelais[1]+"&tntRCSelectedAdresse="+oRelais[4]+"&tntRCSelectedCodePostal="+oRelais[2]+"&tntRCSelectedCommune="+oRelais[3]
+				});
+			}
 		}
 	});
-
 }
 
 function listeCommunes(tabCommunes)
