@@ -108,15 +108,12 @@ function tntRCSetSelectedInfo(selectedIdx, noMarkerInfo)
 		url: baseDir + "/modules/tntcarrier/relaisColis/getRelaisData.php",
 		success: function (data) {
 			if (data !== 'ko' && !firstTry) {
-				console.log('loop post: ' + oRelais[0]);
 				$.ajax({
 					type: "POST",
 					url: baseDir+"/modules/tntcarrier/relaisColis/postRelaisData.php",
 					data: "id_cart="+id_cart+"&tntRCSelectedCode="+oRelais[0]+"&tntRCSelectedNom="+oRelais[1]+"&tntRCSelectedAdresse="+oRelais[4]+"&tntRCSelectedCodePostal="+oRelais[2]+"&tntRCSelectedCommune="+oRelais[3]
 				});
 			}
-			else
-				console.log('first');
 		},
 		complete: function(data) {
 			firstTry = false;
@@ -195,9 +192,10 @@ function listeRelais(tabRelais)
 	tntRCjTable.append("<tr style='background:#999;color:white;height:24px;padding:4px'><th class='tntRCgris' width=''>&nbsp;Les diff&eacute;rents Relais Colis&#174;</th><th class='tntRCgris' width=''>Mon choix</th></tr>");
 	var i = 0;
 	tntRClisteRelais = jData;
+	var oRelais;
 	for(i = 0; i < jData.length; i++) {
 
-		var oRelais = jData[i];
+		oRelais = jData[i];
 		var codeRelais = oRelais[0];
 		var nomRelais = oRelais[1];
 		var adresse = oRelais[4];
@@ -252,22 +250,29 @@ function listeRelais(tabRelais)
 	jMessage.append(tntRCjTable);
 	if (mapDetected) init_marker(tabRelais);
 
-	console.log('start');
 	var id_cart = document.getElementById("cartRelaisColis").value;
 	$.ajax({
 		type: "POST",
 		url: baseDir + "/modules/tntcarrier/relaisColis/getRelaisData.php",
 		success: function (data) {
 			if (data !== 'ko' && $("#tr_carrier_relais input[value="+data+"]").length) {
-				console.log('start: set checkbox to ' + data);
 				$("#tr_carrier_relais input:checked").attr('checked', false);
 				$("#tr_carrier_relais input[value="+data+"]").attr('checked', true);
+				for(i = 0; i < jData.length; i++) {
+					oRelais = jData[i];
+					if (oRelais[0] == data) {
+						$("#tntRCSelectedCode").val(oRelais[0]);
+						$("#tntRCSelectedNom").val(oRelais[1]);
+						$("#tntRCSelectedAdresse").val(oRelais[4]);
+						$("#tntRCSelectedCodePostal").val(oRelais[2]);
+						$("#tntRCSelectedCommune").val(oRelais[3]);
+					}
+				}
 			}
 		},
 		complete: function(data) {
 			if (jData.length && data.responseText === 'ko') {
 				oRelais = jData[0];
-				console.log('start: init to ' + oRelais[0]);
 				$.ajax({
 					type: "POST",
 					url: baseDir + "modules/tntcarrier/relaisColis/postRelaisData.php",
