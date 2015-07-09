@@ -126,7 +126,6 @@ class TntCarrier extends CarrierModule
 	** Install / Uninstall Methods
 	**
 	*/
-
 	public function install()
 	{
 		// Install SQL
@@ -1150,6 +1149,15 @@ class TntCarrier extends CarrierModule
 	{
 		if ((int)($params['id_carrier']) != (int)($params['carrier']->id))
 		{
+			$sqls = array (
+				'UPDATE '._DB_PREFIX_.'order_carrier SET `id_carrier`=%d WHERE `id_carrier`=%d',
+				'UPDATE '._DB_PREFIX_.'orders SET `id_carrier`=%d WHERE `id_carrier`=%d'
+			);
+
+			foreach ($sqls as $sql)
+				if (!Db::getInstance()->execute(sprintf($sql, (int)$params['carrier']->id, (int)$params['id_carrier'])))
+					throw new PrestaShopDatabaseException(Db::getInstance()->getMsgError().'<br /><br /><pre>'.$s.'</pre>');
+
 			$serviceSelected = Db::getInstance()->getRow('SELECT * FROM `'._DB_PREFIX_.'tnt_carrier_option` WHERE `id_carrier` = '.(int)$params['id_carrier']);
 			Configuration::updateValue('TNT_CARRIER_'.$serviceSelected['option'].'_ID', (int)($params['carrier']->id));
 			$update = array('id_carrier' => (int)($params['carrier']->id));
@@ -1167,7 +1175,6 @@ class TntCarrier extends CarrierModule
 	** $shipping_cost var contains the price calculated by the range in carrier tab
 	**
 	*/
-
 	public function getOrderShippingCost($params, $shipping_cost)
 	{
 		if (!$this->active)
