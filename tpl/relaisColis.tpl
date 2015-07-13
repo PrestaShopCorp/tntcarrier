@@ -163,17 +163,36 @@ function displayNewTable(response, id)
 
 	function displayHelp()
 	{
+		var help = {link: false, text: false};
+
 		if ($('#moreinformations').length){
 			$('#moreinformations').remove();
 		}
 		$("#HOOK_BEFORECARRIER").after("<div id='moreinformations' style='margin-bottom:10px;'></div>");
+		$("#moreinformations").html("<span id='tnt_popup' class='button btn'><a href='#'>Cliquez-ici</a></span>");
 
-		if ($("#tntRCSelectedType").val() == 'JZ')
-			$("#moreinformations").html("Vous avez s&eacute;lectionn&eacute; la livraison TNT 24h à domicile, pour avoir plus d'informations <span id='tnt_popup' class='button btn'><a href='#' onclick='displayNewHelpCarrier(\"http://www.tnt.fr/BtoC/page_domicile.html\")'>Cliquez-ici</a></span>");
-		else if ($("#tntRCSelectedType").val() == 'JD')
-			$("#moreinformations").html("Vous avez s&eacute;lectionn&eacute; la livraison TNT 24h Relais Colis®, pour avoir plus d'informations <span id='tnt_popup' class='button btn'><a href='#' onclick='displayNewHelpCarrier(\"http://www.tnt.fr/BtoC/page_relais-colis.html\")'>Cliquez-ici</a></span>");
-		else if ($("#tntRCSelectedType").val() == 'J')
-			$("#moreinformations").html("Vous avez s&eacute;lectionn&eacute; la livraison TNT 24h au bureau, pour avoir plus d'informations <span id='tnt_popup' class='button btn'><a href='#' onclick='displayNewHelpCarrier(\"http://www.tnt.fr/BtoC/page_popup.html\")'>Cliquez-ici</a></span>");
+		if ($("#tntRCSelectedType").val() == 'JZ') {
+			help['text'] = "Vous avez s&eacute;lectionn&eacute; la livraison TNT 24h à domicile, pour avoir plus d'informations ";
+			help['link'] = "http://www.tnt.fr/BtoC/page_domicile.html"
+		}
+		else if ($("#tntRCSelectedType").val() == 'JD') {
+			help['text'] = "Vous avez s&eacute;lectionn&eacute; la livraison TNT 24h Relais Colis®, pour avoir plus d'informations ";
+			help['link'] = "http://www.tnt.fr/BtoC/page_relais-colis.html";
+		}
+		else if ($("#tntRCSelectedType").val() == 'J') {
+			help['text'] = "Vous avez s&eacute;lectionn&eacute; la livraison TNT 24h au bureau, pour avoir plus d'informations ";
+			help['link'] = "http://www.tnt.fr/BtoC/page_popup.html";
+		}
+
+		if (help['text'] !== false && help['link'] !== false) {
+			$("#moreinformations").html(help['text'] + "<span id='tnt_popup' class='button btn'><a href='#'>Cliquez-ici</a></span>");
+			$("#moreinformations").click(function() {
+				displayNewHelpCarrier(help['link']);
+			});
+		}
+		else
+			$('#moreinformations').remove();
+
 	}
 
 	function displayRelais()
@@ -232,13 +251,15 @@ function displayNewTable(response, id)
 
 		$("#tr_carrier_relais").css('height', htr+'px');
 
-		google.maps.event.trigger(map, 'resize');
-
 		displayHelp();
+		if ($("#tntRCSelectedType").val() == 'JD')
+			google.maps.event.trigger(map, 'resize');
+
 	}
 
 	function displayNewHelpCarrier(src)
 	{
+		console.log('test');
 		$('#tntHelpCarrier').remove();
 		$( 'body' ).append("<div id='tntHelpCarrier'><div id='helpCarrierBlock' style='text-align:center;position:relative'><div style='width:930px;margin:auto;background-color:white;border-radius:10px;'><span class='button btn' onclick='hideNewHelpCarrier()' style='float:right;margin-right:37px;'>{/literal}{l s='Close' mod='tntcarrier'}{literal}</span><br/><iframe id='helpCarrierFrame' style='height:500px;width:900px;border:none;margin-top:5px;overflow-x:hidden;overflow-y: scroll;'></iframe></div></div></div>");
 		$("#tntHelpCarrier").css('height', $(document).height()+'px');
