@@ -284,11 +284,7 @@ function displayNewTable(response, id)
 
 	function hideNewShowCarrier()
 	{
-		if($("#tntRCSelectedNom").val() == "")
-		{
-			alert('Vous devez choisir un relais colis !');
-		}
-		else if($('#mobilenumber').length && $('#mobileTnt').val().length < 10)
+		if($('#mobilenumber').length && $('#mobileTnt').val().length < 10)
 		{
 			alert('Veuillez saisir un numéro de téléphone portable !');
 		}
