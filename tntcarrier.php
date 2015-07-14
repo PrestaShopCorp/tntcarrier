@@ -829,7 +829,6 @@ class TntCarrier extends CarrierModule
 	** Hook update carrier
 	**
 	*/
-
 	public function hooknewOrder($params)
 	{
 		if (!$this->active)

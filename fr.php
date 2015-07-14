@@ -180,7 +180,7 @@ $_MODULE['<{tntcarrier}prestashop>shippingform_70397c4b252a5168c5ec003931cea215'
 $_MODULE['<{tntcarrier}prestashop>shippingnumber_c3f15ecc6da0827a8da712cb43a0b596'] = 'L\'information d\'expédition';
 $_MODULE['<{tntcarrier}prestashop>shippingnumber_4d344ab4392dca3969a9af3cedbd560d'] = 'Merci de vérifier que chaque colis pèse un maximum de';
 $_MODULE['<{tntcarrier}prestashop>shippingnumber_2ce124d87604bed00f310d4585d26ea7'] = 'Kg';
-$_MODULE['<{tntcarrier}prestashop>shippingnumber_4d8a6577fb58ee0adbc4b1b578e1ea8d'] = 'Afin d\'obtenir un numéro d\'expédition, merci de modifier le statut de la commande à \"En cours de livraison\"';
+$_MODULE['<{tntcarrier}prestashop>shippingnumber_4d8a6577fb58ee0adbc4b1b578e1ea8d'] = 'Afin d\'obtenir un numéro d\'expédition, merci de modifier le statut de la commande à \"En cours de livraison/Expédié\"';
 $_MODULE['<{tntcarrier}prestashop>shippingnumber_337d01bac642ef65f5c694d91a78551c'] = 'Numéro(s) d\'expédition';
 $_MODULE['<{tntcarrier}prestashop>shippingnumber_0b77915df34c7873750ea67e88c88451'] = 'Etiquette';
 $_MODULE['<{tntcarrier}prestashop>shippingnumber_d5aad80114d8aa47f31a6f5050ef6835'] = 'Expédition';
@@ -188,7 +188,7 @@ $_MODULE['<{tntcarrier}prestashop>shippingnumber_0c458988127eb2150776881e2ef3f0c
 $_MODULE['<{tntcarrier}prestashop>shippingnumber_e19726b466603bc3e444dd26fbcde074'] = 'Adresse du client';
 $_MODULE['<{tntcarrier}prestashop>shippingnumber_25364beb50b7a39331177a65760e18f7'] = 'Adresse du point relais';
 $_MODULE['<{tntcarrier}prestashop>weightform_c3f15ecc6da0827a8da712cb43a0b596'] = 'Informations de livraison';
-$_MODULE['<{tntcarrier}prestashop>weightform_d66bafd92f698ed7fac400597d08db9f'] = 'Votre paquet doit faire plus de 0.1Kg et';
+$_MODULE['<{tntcarrier}prestashop>weightform_d66bafd92f698ed7fac400597d08db9f'] = 'Votre paquet doit faire plus de 0.1Kg et moins de ';
 $_MODULE['<{tntcarrier}prestashop>weightform_56d721ccadb8bbfd8b47390d82a6ea4b'] = 'Kg';
 $_MODULE['<{tntcarrier}prestashop>weightform_06752dfc0286b9fa9e541f204f32f201'] = 'Poids (Kg)';
 $_MODULE['<{tntcarrier}prestashop>weightform_7f090bbab1cc7f9c08bf4e54d932d3c0'] = 'Modifier';
