@@ -259,7 +259,6 @@ function displayNewTable(response, id)
 
 	function displayNewHelpCarrier(src)
 	{
-		console.log('test');
 		$('#tntHelpCarrier').remove();
 		$( 'body' ).append("<div id='tntHelpCarrier'><div id='helpCarrierBlock' style='text-align:center;position:relative'><div style='width:930px;margin:auto;background-color:white;border-radius:10px;'><span class='button btn' onclick='hideNewHelpCarrier()' style='float:right;margin-right:37px;'>{/literal}{l s='Close' mod='tntcarrier'}{literal}</span><br/><iframe id='helpCarrierFrame' style='height:500px;width:900px;border:none;margin-top:5px;overflow-x:hidden;overflow-y: scroll;'></iframe></div></div></div>");
 		$("#tntHelpCarrier").css('height', $(document).height()+'px');
@@ -284,11 +283,7 @@ function displayNewTable(response, id)
 
 	function hideNewShowCarrier()
 	{
-		if($("#tntRCSelectedNom").val() == "")
-		{
-			alert('Vous devez choisir un relais colis !');
-		}
-		else if($('#mobilenumber').length && $('#mobileTnt').val().length < 10)
+		if($('#mobilenumber').length && $('#mobileTnt').val().length < 10)
 		{
 			alert('Veuillez saisir un numéro de téléphone portable !');
 		}
