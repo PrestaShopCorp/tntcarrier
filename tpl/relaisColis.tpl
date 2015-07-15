@@ -50,15 +50,15 @@ $().ready(function()
 				if(option_carrier[indexTab].length > 1)
 				{
 					if (option_carrier[indexTab].charAt(1) == 'Z')
-						$("#id_carrier"+$(this).val()).parent().parent().children(".carrier_infos").append("<br/><span onclick=\'displayHelpCarrier(\"http://www.tnt.fr/BtoC/page_domicile.html\")\' style=\'font-style:italic;cursor:pointer;color:blue;text-decoration:underline\'>+ d\'infos</span>");
+						$("#id_carrier"+$(this).val()).parent().parent().children(".carrier_infos").append("<br/><span onclick=\'displayHelpCarrier(\"https://www.tnt.fr/BtoC/page_domicile.html\")\' style=\'font-style:italic;cursor:pointer;color:blue;text-decoration:underline\'>+ d\'infos</span>");
 					else if (option_carrier[indexTab].charAt(1) == 'D')
-						$("#id_carrier"+$(this).val()).parent().parent().children(".carrier_infos").append("<br/><span onclick=\'displayHelpCarrier(\"http://www.tnt.fr/BtoC/page_relais-colis.html\")\' style=\'font-style:italic;cursor:pointer;color:blue;text-decoration:underline\'>+ d\'infos</span>");
+						$("#id_carrier"+$(this).val()).parent().parent().children(".carrier_infos").append("<br/><span onclick=\'displayHelpCarrier(\"https://www.tnt.fr/BtoC/page_relais-colis.html\")\' style=\'font-style:italic;cursor:pointer;color:blue;text-decoration:underline\'>+ d\'infos</span>");
 
 					else
-						$("#id_carrier"+$(this).val()).parent().parent().children(".carrier_infos").append("<br/><span onclick=\'displayHelpCarrier(\"http://www.tnt.fr/BtoC/page_popup.html\")\' style=\'font-style:italic;cursor:pointer;color:blue;text-decoration:underline\'>+ d\'infos</span>");
+						$("#id_carrier"+$(this).val()).parent().parent().children(".carrier_infos").append("<br/><span onclick=\'displayHelpCarrier(\"https://www.tnt.fr/BtoC/page_popup.html\")\' style=\'font-style:italic;cursor:pointer;color:blue;text-decoration:underline\'>+ d\'infos</span>");
 				}
 				else
-					$("#id_carrier"+$(this).val()).parent().parent().children(".carrier_infos").append("<br/><span onclick=\'displayHelpCarrier(\"http://www.tnt.fr/BtoC/page_popup.html\")\' style=\'font-style:italic;cursor:pointer;color:blue;text-decoration:underline\'>+ d\'infos</span>");
+					$("#id_carrier"+$(this).val()).parent().parent().children(".carrier_infos").append("<br/><span onclick=\'displayHelpCarrier(\"https://www.tnt.fr/BtoC/page_popup.html\")\' style=\'font-style:italic;cursor:pointer;color:blue;text-decoration:underline\'>+ d\'infos</span>");
 			}
 		});
 });
@@ -113,14 +113,14 @@ function displayNewTable(response, id)
 				if(option_carrier[indexTab].length > 1)
 				{
 					if (option_carrier[indexTab].charAt(1) == 'Z')
-						$("[for='"+$(this).attr('id')+"'] .delivery_option_logo").append(" <span id=\'tnt_popup\' onclick=\'displayHelpCarrier(\"http://www.tnt.fr/BtoC/page_domicile.html\");return false;\' style=\'font-style:italic;cursor:pointer;color:blue;text-decoration:underline\'>+ d\'infos</span>");
+						$("[for='"+$(this).attr('id')+"'] .delivery_option_logo").append(" <span id=\'tnt_popup\' onclick=\'displayHelpCarrier(\"https://www.tnt.fr/BtoC/page_domicile.html\");return false;\' style=\'font-style:italic;cursor:pointer;color:blue;text-decoration:underline\'>+ d\'infos</span>");
 					else if (option_carrier[indexTab].charAt(1) == 'D')
-						$("[for='"+$(this).attr('id')+"'] .delivery_option_logo").append(" <span id=\'tnt_popup"+id_array[0]+"\' onclick=\'displayHelpCarrier(\"http://www.tnt.fr/BtoC/page_relais-colis.html\");return false;\' style=\'font-style:italic;cursor:pointer;color:blue;text-decoration:underline\'>+ d\'infos</span>");
+						$("[for='"+$(this).attr('id')+"'] .delivery_option_logo").append(" <span id=\'tnt_popup"+id_array[0]+"\' onclick=\'displayHelpCarrier(\"https://www.tnt.fr/BtoC/page_relais-colis.html\");return false;\' style=\'font-style:italic;cursor:pointer;color:blue;text-decoration:underline\'>+ d\'infos</span>");
 					else
-						$("[for='"+$(this).attr('id')+"'] .delivery_option_logo").append(" <span id=\'tnt_popup"+id_array[0]+"\' onclick=\'displayHelpCarrier(\"http://www.tnt.fr/BtoC/page_popup.html\");return false;\' style=\'font-style:italic;cursor:pointer;color:blue;text-decoration:underline\'>+ d\'infos</span>");
+						$("[for='"+$(this).attr('id')+"'] .delivery_option_logo").append(" <span id=\'tnt_popup"+id_array[0]+"\' onclick=\'displayHelpCarrier(\"https://www.tnt.fr/BtoC/page_popup.html\");return false;\' style=\'font-style:italic;cursor:pointer;color:blue;text-decoration:underline\'>+ d\'infos</span>");
 				}
 				else
-					$("[for='"+$(this).attr('id')+"'] .delivery_option_logo").append(" <span id=\'tnt_popup"+id_array[0]+"\' onclick=\'displayHelpCarrier(\"http://www.tnt.fr/BtoC/page_popup.html\");return false;\' style=\'font-style:italic;cursor:pointer;color:blue;text-decoration:underline\'>+ d\'infos</span>");
+					$("[for='"+$(this).attr('id')+"'] .delivery_option_logo").append(" <span id=\'tnt_popup"+id_array[0]+"\' onclick=\'displayHelpCarrier(\"https://www.tnt.fr/BtoC/page_popup.html\");return false;\' style=\'font-style:italic;cursor:pointer;color:blue;text-decoration:underline\'>+ d\'infos</span>");
 			}
 		});
 	});
@@ -173,15 +173,15 @@ function displayNewTable(response, id)
 
 		if ($("#tntRCSelectedType").val() == 'JZ') {
 			help['text'] = "Vous avez s&eacute;lectionn&eacute; la livraison TNT 24h à domicile, pour avoir plus d'informations ";
-			help['link'] = "http://www.tnt.fr/BtoC/page_domicile.html"
+			help['link'] = "https://www.tnt.fr/BtoC/page_domicile.html"
 		}
 		else if ($("#tntRCSelectedType").val() == 'JD') {
 			help['text'] = "Vous avez s&eacute;lectionn&eacute; la livraison TNT 24h Relais Colis®, pour avoir plus d'informations ";
-			help['link'] = "http://www.tnt.fr/BtoC/page_relais-colis.html";
+			help['link'] = "https://www.tnt.fr/BtoC/page_relais-colis.html";
 		}
 		else if ($("#tntRCSelectedType").val() == 'J') {
 			help['text'] = "Vous avez s&eacute;lectionn&eacute; la livraison TNT 24h au bureau, pour avoir plus d'informations ";
-			help['link'] = "http://www.tnt.fr/BtoC/page_popup.html";
+			help['link'] = "https://www.tnt.fr/BtoC/page_popup.html";
 		}
 
 		if (help['text'] !== false && help['link'] !== false) {
