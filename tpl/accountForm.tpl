@@ -34,5 +34,18 @@
 			<label>{l s='Number account' mod='tntcarrier'} : </label>
 			<div class="margin-form"><input type="text" size="20" name="tnt_carrier_number_account" value="{$varAccount.account|escape:'htmlall'}" /></div>
 		</fieldset>
-	<div class="margin-form"><input class="button" name="submitSave" type="submit" value="{l s='save' mod='tntcarrier'}"></div>
-</form>
+		<div class="margin-form">
+			<input class="button" name="submitSave" type="submit" value="{l s='save' mod='tntcarrier'}"/>
+			{if !isset($account_set) || $account_set === true}
+				<input style="width: 25px" id="next_btn1" class="button" name="next" onclick="" value="{l s='next' mod='tntcarrier'}"/>
+			{/if}
+		</div>
+	</form>
+	<script type="text/javascript">
+	$("#next_btn1").click(function () {
+		$(".menuTabButton.selected").removeClass("selected");
+		$("#menuTab2").addClass("selected");
+		$(".tabItem.selected").removeClass("selected");
+		$("#menuTab2Sheet").addClass("selected");
+	});
+	</script>

@@ -25,7 +25,7 @@
 
 <script type="text/javascript" src="../modules/{$varShipping.moduleName}/js/shipping.js"></script>
 <fieldset style="border: 0px;">
-	<form onsubmit="enableSelect();" action="index.php?tab={$glob.tab}&configure={$glob.configure}&token={$glob.token}&tab_module={$glob.tab_module}&module_name={$glob.module_name}&id_tab=2&section=shipping" method="post" class="form" id="configFormShipping">		
+	<form onsubmit="enableSelect();" action="index.php?tab={$glob.tab}&configure={$glob.configure}&token={$glob.token}&tab_module={$glob.tab_module}&module_name={$glob.module_name}&id_tab=2&section=shipping" method="post" class="form" id="configFormShipping">
 		<h4>{l s='Shipping' mod='tntcarrier'} :</h4>
         <div class="margin-form"><input type="hidden" size="20" id="tnt_carrier_shipping_pex" name="tnt_carrier_shipping_pex" value="{$varShipping.pex}" /></div>
         <label>{l s='Company Name' mod='tntcarrier'} : </label>
@@ -67,7 +67,18 @@
 			<option {if $varShipping.sticker == "THERMAL,ROTATE_180"}selected="selected"{/if} value="THERMAL,ROTATE_180">THERMAL {l s='with a reverse print' mod='tntcarrier'}</option>
 			<option {if $varShipping.sticker == "THERMAL,NO_LOGO,ROTATE_180"}selected="selected"{/if} value="THERMAL,NO_LOGO,ROTATE_180">THERMAL {l s='without printing the logo TNT and with a reverse print' mod='tntcarrier'}</option>
 		</select></div><br/><br/>
-		<div class="margin-form"><input class="button" name="submitSave" type="submit" value="{l s='save' mod='tntcarrier'}"></div>
+		<div class="margin-form">
+			<input class="button" name="submitSave" type="submit" value="{l s='save' mod='tntcarrier'}">
+			<input style="width: 25px" id="next_btn2" class="button" name="next" onclick="" value="{l s='next' mod='tntcarrier'}"/>
+		</div>
 	</form>
 <span style="color:red">* : {l s='Required fields' mod='tntcarrier'}</span>
 </fieldset>
+	<script type="text/javascript">
+	$("#next_btn2").click(function () {
+		$(".menuTabButton.selected").removeClass("selected");
+		$("#menuTab3").addClass("selected");
+		$(".tabItem.selected").removeClass("selected");
+		$("#menuTab3Sheet").addClass("selected");
+	});
+	</script>
