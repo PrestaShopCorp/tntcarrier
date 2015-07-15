@@ -37,11 +37,7 @@
 		<div class="margin-form">
 			<input class="button" name="submitSave" type="submit" value="{l s='save' mod='tntcarrier'}"/>
 			{if !isset($account_set) || $account_set === true}
-<<<<<<< HEAD
 				<input style="width: 6%" id="next_btn1" class="button" name="next" onclick="" value="{l s='next' mod='tntcarrier'}"/>
-=======
-				<input style="width: 25px" id="next_btn1" class="button" name="next" onclick="" value="{l s='next' mod='tntcarrier'}"/>
->>>>>>> 9d3e6787938f33cd6da5a92e601255077e940d5a
 			{/if}
 		</div>
 	</form>
