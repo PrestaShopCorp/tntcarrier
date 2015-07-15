@@ -643,8 +643,8 @@ class TntCarrier extends CarrierModule
 
 		if (!$phone)
 			$this->_postErrors[] = $this->l('Contact phone number is missing');
-		else if (preg_match('/^(?:\+[0-9][0-9]?)? ?((?:[0-9]{2}(?:\.?|\s*)){4}[0-9]{2})$/', trim($phone), $ret))
-			$phone = preg_replace('/[^0-9]/', '', $ret[1]);
+		else if (preg_match('/^(\+\d\d|\d)((?:\d\.?\s*){8}[0-9])$/', trim($phone), $ret))
+			$phone = '0'.preg_replace('/[^0-9]/', '', $ret[2]);
 		else
 		{
 			$phone = '';
