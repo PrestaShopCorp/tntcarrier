@@ -186,7 +186,7 @@ function displayNewTable(response, id)
 
 		if (help['text'] !== false && help['link'] !== false) {
 			$("#moreinformations").html(help['text'] + "<span id='tnt_popup' class='button btn'><a href='#'>Cliquez-ici</a></span>");
-			$("#moreinformations").click(function() {
+			$("#tnt_popup").click(function() {
 				displayNewHelpCarrier(help['link']);
 			});
 		}
