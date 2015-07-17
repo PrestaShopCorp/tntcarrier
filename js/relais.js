@@ -67,6 +67,7 @@ function tntRCgetRelaisColis(commune)
 function tntRCgetCommunes()
 {
 	tntRCcodePostal = $('#tntRCInputCP').val();
+	var htr = 505;
 
 	// Code postal non renseigné, on ne fait rien
 	if (tntRCcodePostal=="") return;
@@ -77,11 +78,28 @@ function tntRCgetCommunes()
 		$("#relaisColisResponse").html("Veuillez saisir un code postal sur 5 chiffres");
 		return;
 	}
+
 	var ajaxUrl;
 	var ajaxData;
 	ajaxUrl = "https://www.tnt.fr/public/b2c/relaisColis/rechercheJson.do?code=" + tntRCcodePostal;
 	ajaxData = "";
-	$.ajax({type: "GET", url: ajaxUrl, data: ajaxData, dataType: "script", error:function(msg){$("#relaisColisResponse").html("Error !: " + msg );}});
+	$.ajax({
+		type: "GET",
+		url: ajaxUrl,
+		data: ajaxData,
+		dataType: "script",
+		success:function() {
+			if ($('#relaisColisResponse').length) {
+				if ($('#relaisColisResponse')[0].clientHeight < htr)
+					$("#tr_carrier_relais").css('height', '505px');
+				else
+					$("#tr_carrier_relais").css('height', '100%');
+			}
+		},
+		error:function(msg){
+			$("#relaisColisResponse").html("Error !: " + msg );
+		}
+	});
 }
 
 function tntRCSetSelectedInfo(selectedIdx, noMarkerInfo)
