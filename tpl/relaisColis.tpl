@@ -215,7 +215,7 @@ function displayNewTable(response, id)
 		if ($('#relaisColis').length){
 			$('#relaisColis').remove();
 		}
-		$( 'body' ).append("<div id='tntShowCarrier' style='display:none;'><div id='helpCarrierBlock' style='text-align:center;position:relative'><div style='border-radius:10px;width:930px;margin:auto;background-color:white;padding-top:10px;'><span class='button btn' onclick='hideNewShowCarrier()' style='float:right;margin-right:37px;'>{/literal}{l s='Close' mod='tntcarrier'}{literal}</span><br/><div id='tr_carrier_relais' style='width:920px;border:none;margin-top:5px;overflow-x:hidden;overflow-y:auto;'></div><div id='button_carrier_relais' style='padding-top:5px;padding-bottom:10px;'></p><a href='#' class='button btn' onclick='submitFormCmd()'>{/literal}{l s='Valider' mod='tntcarrier'}{literal}</a></div></div></div></div>");
+		$( 'body' ).append("<div id='tntShowCarrier' style='display:none;'><div id='helpCarrierBlock' style='text-align:center;position:relative'><div style='border-radius:10px;width:930px;margin:auto;background-color:white;padding-top:10px;'><span class='button btn' onclick='hideNewShowCarrier(1)' style='float:right;margin-right:37px;'>{/literal}{l s='Close' mod='tntcarrier'}{literal}</span><br/><div id='tr_carrier_relais' style='width:920px;border:none;margin-top:5px;overflow-x:hidden;overflow-y:auto;'></div><div id='button_carrier_relais' style='padding-top:5px;padding-bottom:10px;'></p><a href='#' class='button btn' onclick='submitFormCmd()'>{/literal}{l s='Valider' mod='tntcarrier'}{literal}</a></div></div></div></div>");
 		$("#tntShowCarrier").css('height', ($(document).height())+'px');
 		$("#tntShowCarrier").css('width', $(document).width()+'px');
 		$("#tntShowCarrier").css('background', 'url({/literal}{$shop_url}{literal}img/macFFBgHack.png)');
@@ -279,13 +279,20 @@ function displayNewTable(response, id)
 			$("#HelpCarrierBlock").css('margin-top', '20px');
 	}
 
-
-
-	function hideNewShowCarrier()
+	function hideNewShowCarrier(close)
 	{
+		close = typeof close !== 'undefined' ? close : false;
+
 		if($('#mobilenumber').length && $('#mobileTnt').val().length < 10)
 		{
 			alert('Veuillez saisir un numéro de téléphone portable !');
+		}
+		else if(!$('[name=tntRCchoixRelais]:checked').length)
+		{
+			if (close)
+				alert('Veuillez choisir un point Relais Colis');
+			else
+				tntRCgetRelaisColis();
 		}
 		else
 		{
@@ -369,7 +376,7 @@ function displayNewTable(response, id)
 <div id="tntHelpCarrier" style="display:none;position:absolute;width:100%;top:0px;left:0px;background:url('{$shop_url}img/macFFBgHack.png');z-index:10000">
 	<div id="helpCarrierBlock" style="text-align:center;position:relative">
 		<div style="width:720px;margin:auto;background-color:white">
-		<span style="cursor:pointer;color:blue;text-decoration:underline;" onclick="hideHelpCarrier()">{l s='Close' mod='tntcarrier'}</span><br/>
+		<span style="cursor:pointer;color:blue;text-decoration:underline;" onclick="hideHelpCarrier(1)">{l s='Close' mod='tntcarrier'}</span><br/>
 		<iframe id="helpCarrierFrame" style="height:500px;width:700px;border:none;margin-top:5px">
 		</iframe>
 		</div>
