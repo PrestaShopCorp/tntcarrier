@@ -985,7 +985,7 @@ class TntCarrier extends CarrierModule
 		$output = null;
 		if (isset($this->context) && method_exists($this->context->controller, 'addJS'))
 		{
-			$this->context->controller->addJS('https://maps.google.com/maps/api/js?sensor=true');
+			$this->context->controller->addJS('https://maps.google.com/maps/api/js?sensor=false');
 			$this->context->controller->addJS($this->_path.'js/relais.js');
 			$this->context->controller->addCss($this->_path.'css/tntRelaisColis.css');
 
