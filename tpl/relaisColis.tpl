@@ -287,7 +287,7 @@ function displayNewTable(response, id)
 		{
 			alert('Veuillez saisir un numéro de téléphone portable !');
 		}
-		else if(!$('[name=tntRCchoixRelais]:checked').length)
+		else if($("#tntRCSelectedType").val() == 'JD' && !$('[name=tntRCchoixRelais]:checked').length)
 		{
 			if (close)
 				alert('Veuillez choisir un point Relais Colis');
