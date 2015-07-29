@@ -251,12 +251,12 @@ function listeRelais(tabRelais)
 		tntRCjTable.append(
 			"<tr>"+
 				"<td style='font-size:10px; padding:0px' class='tntRCrelaisColis' width=''>&nbsp;&nbsp;&nbsp;"+nomRelais+" - "+adresse+" - "+codePostal+" - "+commune+"<BR>&nbsp;&nbsp;&nbsp;&nbsp;>> Ouvert jusqu'&agrave; "+heureFermeture+"</td>"+
-				"<td style='font-size:10px;  padding: 0;' class='tntRCrelaisColis' valign='middle' align='center' width=''>"+
-					"<img onclick='afficheDetail(" + i + ");' style='vertical-align:middle;cursor:pointer' src='"+baseDir+"/modules/tntcarrier/img/loupe.gif' class='tntRCBoutonLoupe'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
-					"<input type='radio' style='vertical-align: middle;margin-left:0px' name='tntRCchoixRelais' value='"+codeRelais+"'"+(i==0 ? "checked" : "")+" onclick='tntRCSetSelectedInfo("+i+")'/>"+
+				"<td style='font-size:10px;' class='tntRCrelaisColis' valign='middle' align='center' width=''>"+
+				// 	"<img onclick='afficheDetail(" + i + ");' style='vertical-align:middle;cursor:pointer' src='"+baseDir+"/modules/tntcarrier/img/loupe.gif' class='tntRCBoutonLoupe'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
+					"<input type='radio' style='vertical-align: middle;margin-left:20px' name='tntRCchoixRelais' value='"+codeRelais+"'"+(i==0 ? "checked" : "")+" onclick='tntRCSetSelectedInfo("+i+")'/>"+
 				"</td>"+
-				"</tr>" +
-				"<td colspan='6'><table style='display:none;' id='tntRCDetail"+i+"'><tr><td>lundi : "+lundi_am+"</td><td>mardi : "+mardi_am+"</td><td>mercredi : "+mercredi_am+"</td><td>jeudi : "+jeudi_am+"</td><td>vendredi : "+vendredi_am+"</td><td>samedi : "+samedi_am+"</td><td>dimanche : "+dimanche_am+"</td></tr></table></td>"
+				"</tr>"
+				// "<td colspan='6'><table style='position:absolute;max-width:50%;display:none;' id='tntRCDetail"+i+"'><tr><td>lundi : "+lundi_am+"</td><td>mardi : "+mardi_am+"</td><td>mercredi : "+mercredi_am+"</td><td>jeudi : "+jeudi_am+"</td><td>vendredi : "+vendredi_am+"</td><td>samedi : "+samedi_am+"</td><td>dimanche : "+dimanche_am+"</td></tr></table></td>"
 
 			);
 	}
