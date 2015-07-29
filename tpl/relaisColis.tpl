@@ -283,16 +283,16 @@ function displayNewTable(response, id)
 	{
 		close = typeof close !== 'undefined' ? close : false;
 
-		if($('#mobilenumber').length && $('#mobileTnt').val().length < 10)
-		{
-			alert('Veuillez saisir un numéro de téléphone portable !');
-		}
-		else if($("#tntRCSelectedType").val() == 'JD' && !$('[name=tntRCchoixRelais]:checked').length)
+		if($("#tntRCSelectedType").val() == 'JD' && !$('[name=tntRCchoixRelais]:checked').length)
 		{
 			if (close)
 				alert('Veuillez choisir un point Relais Colis');
 			else
 				tntRCgetRelaisColis();
+		}
+		else if(!close && $('#mobilenumber').length && $('#mobileTnt').val().length < 10)
+		{
+			alert('Veuillez saisir un numéro de téléphone portable !');
 		}
 		else
 		{
@@ -303,8 +303,6 @@ function displayNewTable(response, id)
 				displayRelais();
 			}
 		}
-
-
 	}
 
 	function hideNewHelpCarrier()
