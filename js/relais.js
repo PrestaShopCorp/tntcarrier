@@ -351,7 +351,7 @@ function erreurListeCommunes() {
 }
 
 function erreurListeRelais() {
-$("#relaisColisResponse").html("Erreur");
+	$("#relaisColisResponse").html("Aucun Relais Colis trouv&eacute; pour cette location");
 }
 
 /************************************************************************************************

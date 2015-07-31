@@ -149,6 +149,7 @@ function displayNewTable(response, id)
 
 	if ($('.opc-main-block').length == 0) {
 		$("input[name*='delivery_option[']").click(function() {
+			enableProcessCarrier();
 			var id_array = $("input[name*='delivery_option[']:checked").val().split(',');
 			if (document.getElementById("tr_carrier_relais"))
 				$("#tr_carrier_relais").remove();
@@ -279,16 +280,37 @@ function displayNewTable(response, id)
 			$("#HelpCarrierBlock").css('margin-top', '20px');
 	}
 
+	function unselectCarrier()
+	{
+		$('input[name^=delivery_option]:checked').parent().removeClass('checked');
+		$('button[name=processCarrier]').addClass('disabled');
+	}
+
+	function enableProcessCarrier()
+	{
+		$('button[name=processCarrier]').removeClass('disabled');
+	}
+
+
 	function hideNewShowCarrier(close)
 	{
 		close = typeof close !== 'undefined' ? close : false;
 
 		if($("#tntRCSelectedType").val() == 'JD' && !$('[name=tntRCchoixRelais]:checked').length)
 		{
+
 			if (close)
-				alert('Veuillez choisir un point Relais Colis');
+			{
+				unselectCarrier();
+				$("#tntShowCarrier").hide();
+				displayHelp();
+				if ($("#tntRCSelectedType").val() == 'JD')
+					displayRelais();
+			}
 			else
+			{
 				tntRCgetRelaisColis();
+			}
 		}
 		else if(!close && $('#mobilenumber').length && $('#mobileTnt').val().length < 10)
 		{
