@@ -312,9 +312,18 @@ function displayNewTable(response, id)
 				tntRCgetRelaisColis();
 			}
 		}
-		else if(!close && $('#mobilenumber').length && $('#mobileTnt').val().length < 10)
+		else if($('#mobilenumber').length && $('#mobileTnt').val().length < 10)
 		{
-			alert('Veuillez saisir un numéro de téléphone portable !');
+			if (close)
+			{
+				unselectCarrier();
+				$("#tntShowCarrier").hide();
+				displayHelp();
+				if ($("#tntRCSelectedType").val() == 'JD')
+					displayRelais();
+			}
+			else
+				alert('Veuillez saisir un numéro de téléphone portable !');
 		}
 		else
 		{
