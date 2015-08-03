@@ -133,7 +133,7 @@ class TntWebService
 		$receiver = array("zipCode" => $codePostalArrivee, "city" => $communeArrivee, "type" => $typeDestinataire);
 		$parameters = array("accountNumber" => $this->_account, "shippingDate" => $dateExpedition, "sender" => $sender, "receiver" => $receiver);
 		$services = $soapclient->feasibility(array('parameters' => $parameters));
-		
+
 		return ($services);
 	}
 
@@ -144,9 +144,9 @@ class TntWebService
 		$tntcarrier = new TntCarrier();
 
 		$scity = Configuration::get('TNT_CARRIER_SHIPPING_CITY');
-		
+
 		$scity = (strlen($scity) > 27 ? substr($scity, 0, 27) : $scity);
-		
+
 		$sender = array(
 			'type' => "ENTERPRISE",//(Configuration::get('TNT_CARRIER_SHIPPING_COLLECT') ? "ENTERPRISE" : "DEPOT"), //ENTREPRISE OR DEPOT
 			'typeId' => "",//(Configuration::get('TNT_CARRIER_SHIPPING_COLLECT') ? "" : Configuration::get('TNT_CARRIER_SHIPPING_PEX')) , // code PEX if DEPOT is ON
@@ -161,7 +161,7 @@ class TntWebService
 			'phoneNumber' => str_replace(' ', '', Configuration::get('TNT_CARRIER_SHIPPING_PHONE')),
 			'faxNumber' => '' //may be later
 		);
-		
+
 		$phone = (isset($info[0]['phone_mobile']) && $info[0]['phone_mobile'] != '' ? str_replace(' ', '', $info[0]['phone_mobile']) : str_replace(' ', '', $info[0]['phone']));
 
 		if (substr($phone, 0, 3) == '+33')
@@ -195,6 +195,7 @@ class TntWebService
 				'sendNotification' => '1'
 			);
 		else
+		{
 			$receiver = array(
 				'type' => 'DROPOFFPOINT', // ENTREPRISE DEPOT DROPOFFPOINT INDIVIDUAL
 				'typeId' => $info[4]['code'], // IF DEPOT => code PEX else if DROPOFFPOINT => XETT
@@ -210,7 +211,8 @@ class TntWebService
 				'buildingId' => '',
 				'sendNotification' => '1'
 			);
-
+			$receiver['name'] = sprintf('%s %s', $receiver['contactFirstName'], $receiver['contactLastName']);
+		}
 		foreach ($info[1]['weight'] as $k => $v)
 		{
 			$parcelRequest[$k] = array(
@@ -269,6 +271,7 @@ class TntWebService
 			'labelFormat' => (!Configuration::get('TNT_CARRIER_PRINT_STICKER') ? "STDA4" : Configuration::get('TNT_CARRIER_PRINT_STICKER'))
 			);
 		}
+
 		$package = $soapclient->expeditionCreation(array('parameters' => $paremeters));
 		return $package;
 	}

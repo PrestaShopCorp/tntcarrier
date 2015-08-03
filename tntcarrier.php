@@ -51,7 +51,7 @@ class TntCarrier extends CarrierModule
 	{
 		$this->name = 'tntcarrier';
 		$this->tab = 'shipping_logistics';
-		$this->version = '1.9.14';
+		$this->version = '1.9.15';
 		$this->author = 'PrestaShop';
 		$this->limited_countries = array('fr');
 		$this->module_key = 'd4dcfde9937b67002235598ac35cbdf8';
@@ -126,7 +126,6 @@ class TntCarrier extends CarrierModule
 	** Install / Uninstall Methods
 	**
 	*/
-
 	public function install()
 	{
 		// Install SQL
@@ -641,8 +640,17 @@ class TntCarrier extends CarrierModule
 			$this->_postErrors[] = $this->l('Postal code is missing');
 		if (!$email)
 			$this->_postErrors[] = $this->l('Contact email address is missing');
+
 		if (!$phone)
 			$this->_postErrors[] = $this->l('Contact phone number is missing');
+		else if (preg_match('/^(\+\d\d|\d)((?:\d\.?\s*){8}[0-9])$/', trim($phone), $ret))
+			$phone = '0'.preg_replace('/[^0-9]/', '', $ret[2]);
+		else
+		{
+			$phone = '';
+			$this->_postErrors[] = $this->l('Wrong phone number format, should be (XX.XX.XX.XX.XX)');
+		}
+
 		if ($collect && $closing == '')
 			$this->_postErrors[] = $this->l('Company closing time is missing');
 
@@ -830,7 +838,6 @@ class TntCarrier extends CarrierModule
 	** Hook update carrier
 	**
 	*/
-
 	public function hooknewOrder($params)
 	{
 		if (!$this->active)
@@ -978,10 +985,15 @@ class TntCarrier extends CarrierModule
 		$output = null;
 		if (isset($this->context) && method_exists($this->context->controller, 'addJS'))
 		{
-			$this->context->controller->addJS('https://maps.google.com/maps/api/js?sensor=true');
+			$this->context->controller->addJS('https://maps.google.com/maps/api/js?sensor=false');
 			$this->context->controller->addJS($this->_path.'js/relais.js');
-			$this->context->controller->addJS($this->_path.'js/jquery-ui.js');
 			$this->context->controller->addCss($this->_path.'css/tntRelaisColis.css');
+
+			if (version_compare(_PS_VERSION_, '1.5', '<'))
+				$this->context->controller->addJS($this->_path.'js/jquery-ui.js');
+			else
+				$this->context->controller->addJqueryUI('ui.tabs');
+
 		}
 
 		return $output.$this->display(__FILE__, 'tpl/relaisColis.tpl');
@@ -1145,6 +1157,15 @@ class TntCarrier extends CarrierModule
 	{
 		if ((int)($params['id_carrier']) != (int)($params['carrier']->id))
 		{
+			$sqls = array (
+				'UPDATE '._DB_PREFIX_.'order_carrier SET `id_carrier`=%d WHERE `id_carrier`=%d',
+				'UPDATE '._DB_PREFIX_.'orders SET `id_carrier`=%d WHERE `id_carrier`=%d'
+			);
+
+			foreach ($sqls as $sql)
+				if (!Db::getInstance()->execute(sprintf($sql, (int)$params['carrier']->id, (int)$params['id_carrier'])))
+					throw new PrestaShopDatabaseException(Db::getInstance()->getMsgError().'<br /><br /><pre>'.$s.'</pre>');
+
 			$serviceSelected = Db::getInstance()->getRow('SELECT * FROM `'._DB_PREFIX_.'tnt_carrier_option` WHERE `id_carrier` = '.(int)$params['id_carrier']);
 			Configuration::updateValue('TNT_CARRIER_'.$serviceSelected['option'].'_ID', (int)($params['carrier']->id));
 			$update = array('id_carrier' => (int)($params['carrier']->id));
@@ -1162,7 +1183,6 @@ class TntCarrier extends CarrierModule
 	** $shipping_cost var contains the price calculated by the range in carrier tab
 	**
 	*/
-
 	public function getOrderShippingCost($params, $shipping_cost)
 	{
 		if (!$this->active)

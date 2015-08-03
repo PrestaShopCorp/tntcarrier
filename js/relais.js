@@ -1,5 +1,6 @@
 var tntRCcodePostal;
 var tntRClisteRelais;
+var firstTry = true;
 
 $("#form").submit(function()
 	{
@@ -8,6 +9,7 @@ $("#form").submit(function()
 			alert("Vous n\'avez pas choisi de relais colis");
 			return false;
 		}
+		return true;
 	});
 
 function postMobile(token)
@@ -46,7 +48,7 @@ function tntRCgetRelaisColis(commune)
 	}
 	// Affichage message "chargement en cours"
 	//tntRCsetChargementEnCours();
-8
+
 	var ajaxUrl;
 	var ajaxData;
 
@@ -62,9 +64,10 @@ function tntRCgetRelaisColis(commune)
 	});
 }
 
-function		tntRCgetCommunes()
+function tntRCgetCommunes()
 {
 	tntRCcodePostal = $('#tntRCInputCP').val();
+	var htr = 505;
 
 	// Code postal non renseigné, on ne fait rien
 	if (tntRCcodePostal=="") return;
@@ -75,11 +78,28 @@ function		tntRCgetCommunes()
 		$("#relaisColisResponse").html("Veuillez saisir un code postal sur 5 chiffres");
 		return;
 	}
+
 	var ajaxUrl;
 	var ajaxData;
 	ajaxUrl = "https://www.tnt.fr/public/b2c/relaisColis/rechercheJson.do?code=" + tntRCcodePostal;
 	ajaxData = "";
-	$.ajax({type: "GET", url: ajaxUrl, data: ajaxData, dataType: "script", error:function(msg){$("#relaisColisResponse").html("Error !: " + msg );}});
+	$.ajax({
+		type: "GET",
+		url: ajaxUrl,
+		data: ajaxData,
+		dataType: "script",
+		success:function() {
+			if ($('#relaisColisResponse').length) {
+				if ($('#relaisColisResponse')[0].clientHeight < htr)
+					$("#tr_carrier_relais").css('height', '505px');
+				else
+					$("#tr_carrier_relais").css('height', '100%');
+			}
+		},
+		error:function(msg){
+			$("#relaisColisResponse").html("Error !: " + msg );
+		}
+	});
 }
 
 function tntRCSetSelectedInfo(selectedIdx, noMarkerInfo)
@@ -91,7 +111,7 @@ function tntRCSetSelectedInfo(selectedIdx, noMarkerInfo)
 		$("#tntRCSelectedAdresse").val("");
 		$("#tntRCSelectedCodePostal").val("");
 		$("#tntRCSelectedCommune").val("");
-		return
+		return;
 	}
 	var oRelais = tntRClisteRelais[selectedIdx];
 
@@ -101,19 +121,28 @@ function tntRCSetSelectedInfo(selectedIdx, noMarkerInfo)
 	$("#tntRCSelectedCodePostal").val(oRelais[2]);
 	$("#tntRCSelectedCommune").val(oRelais[3]);
 	var id_cart = document.getElementById("cartRelaisColis").value;
-	if (selectedIdx)
-	{
-		$.ajax({
-			type: "POST",
-			url: baseDir+"/modules/tntcarrier/relaisColis/postRelaisData.php",
-			data: "id_cart="+id_cart+"&tntRCSelectedCode="+oRelais[0]+"&tntRCSelectedNom="+oRelais[1]+"&tntRCSelectedAdresse="+oRelais[4]+"&tntRCSelectedCodePostal="+oRelais[2]+"&tntRCSelectedCommune="+oRelais[3]
-		});
-	}
+	$.ajax({
+		type: "POST",
+		url: baseDir + "/modules/tntcarrier/relaisColis/getRelaisData.php",
+		success: function (data) {
+			if (data !== 'ko' && !firstTry) {
+				$.ajax({
+					type: "POST",
+					url: baseDir+"/modules/tntcarrier/relaisColis/postRelaisData.php",
+					data: "id_cart="+id_cart+"&tntRCSelectedCode="+oRelais[0]+"&tntRCSelectedNom="+oRelais[1]+"&tntRCSelectedAdresse="+oRelais[4]+"&tntRCSelectedCodePostal="+oRelais[2]+"&tntRCSelectedCommune="+oRelais[3]
+				});
+			}
+		},
+		complete: function(data) {
+			firstTry = false;
+		}
+	});
+
 
 	if (mapDetected && !noMarkerInfo) {
 
 		// Les noeuds dans le fichier XML ne sont pas forcément ordonnés pour l'affichage, on va donc d'abord récupérer leur valeur
-		var codeRelais = oRelais[0]
+		var codeRelais = oRelais[0];
 		var nomRelais = oRelais[1];
 		var adresse = oRelais[4];
 		var codePostal = oRelais[2];
@@ -153,7 +182,7 @@ function tntRCSetSelectedInfo(selectedIdx, noMarkerInfo)
 		horaires['samedi'] = samedi_am + ",6";
 		horaires['dimanche'] = dimanche_am + ",0";
 
-		var messages = "";
+		messages = "";
 		for (j=0; j < oRelais[24].length; j++) {
 			var ligne = oRelais[24][j];
 			if (ligne != "") messages = messages + ligne + "<br/>";
@@ -181,9 +210,10 @@ function listeRelais(tabRelais)
 	tntRCjTable.append("<tr style='background:#999;color:white;height:24px;padding:4px'><th class='tntRCgris' width=''>&nbsp;Les diff&eacute;rents Relais Colis&#174;</th><th class='tntRCgris' width=''>Mon choix</th></tr>");
 	var i = 0;
 	tntRClisteRelais = jData;
+	var oRelais;
 	for(i = 0; i < jData.length; i++) {
 
-		var oRelais = jData[i];
+		oRelais = jData[i];
 		var codeRelais = oRelais[0];
 		var nomRelais = oRelais[1];
 		var adresse = oRelais[4];
@@ -221,12 +251,12 @@ function listeRelais(tabRelais)
 		tntRCjTable.append(
 			"<tr>"+
 				"<td style='font-size:10px; padding:0px' class='tntRCrelaisColis' width=''>&nbsp;&nbsp;&nbsp;"+nomRelais+" - "+adresse+" - "+codePostal+" - "+commune+"<BR>&nbsp;&nbsp;&nbsp;&nbsp;>> Ouvert jusqu'&agrave; "+heureFermeture+"</td>"+
-				"<td style='font-size:10px;  padding: 0;' class='tntRCrelaisColis' valign='middle' align='center' width=''>"+
-					"<img onclick='afficheDetail(" + i + ");' style='vertical-align:middle;cursor:pointer' src='"+baseDir+"/modules/tntcarrier/img/loupe.gif' class='tntRCBoutonLoupe'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
-					"<input type='radio' style='vertical-align: middle;margin-left:0px' name='tntRCchoixRelais' value='"+codeRelais+"'"+(i==0 ? "checked" : "")+" onclick='tntRCSetSelectedInfo("+i+")'/>"+
+				"<td style='font-size:10px;' class='tntRCrelaisColis' valign='middle' align='center' width=''>"+
+				// 	"<img onclick='afficheDetail(" + i + ");' style='vertical-align:middle;cursor:pointer' src='"+baseDir+"/modules/tntcarrier/img/loupe.gif' class='tntRCBoutonLoupe'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
+					"<input type='radio' style='vertical-align: middle;margin-left:20px' name='tntRCchoixRelais' value='"+codeRelais+"'"+(i==0 ? "checked" : "")+" onclick='tntRCSetSelectedInfo("+i+")'/>"+
 				"</td>"+
-				"</tr>" +
-				"<td colspan='6'><table style='display:none;' id='tntRCDetail"+i+"'><tr><td>lundi : "+lundi_am+"</td><td>mardi : "+mardi_am+"</td><td>mercredi : "+mercredi_am+"</td><td>jeudi : "+jeudi_am+"</td><td>vendredi : "+vendredi_am+"</td><td>samedi : "+samedi_am+"</td><td>dimanche : "+dimanche_am+"</td></tr></table></td>"
+				"</tr>"
+				// "<td colspan='6'><table style='position:absolute;max-width:50%;display:none;' id='tntRCDetail"+i+"'><tr><td>lundi : "+lundi_am+"</td><td>mardi : "+mardi_am+"</td><td>mercredi : "+mercredi_am+"</td><td>jeudi : "+jeudi_am+"</td><td>vendredi : "+vendredi_am+"</td><td>samedi : "+samedi_am+"</td><td>dimanche : "+dimanche_am+"</td></tr></table></td>"
 
 			);
 	}
@@ -246,19 +276,29 @@ function listeRelais(tabRelais)
 			if (data !== 'ko' && $("#tr_carrier_relais input[value="+data+"]").length) {
 				$("#tr_carrier_relais input:checked").attr('checked', false);
 				$("#tr_carrier_relais input[value="+data+"]").attr('checked', true);
+				for(i = 0; i < jData.length; i++) {
+					oRelais = jData[i];
+					if (oRelais[0] == data) {
+						$("#tntRCSelectedCode").val(oRelais[0]);
+						$("#tntRCSelectedNom").val(oRelais[1]);
+						$("#tntRCSelectedAdresse").val(oRelais[4]);
+						$("#tntRCSelectedCodePostal").val(oRelais[2]);
+						$("#tntRCSelectedCommune").val(oRelais[3]);
+					}
+				}
 			}
 		},
 		complete: function(data) {
-			var response = (data.responseText.length ? data.responseText : oRelais[0]);
-			oRelais = tntRClisteRelais[$("#tr_carrier_relais input:checked").index() - 1];
-			$.ajax({
-				type: "POST",
-				url: baseDir + "/modules/tntcarrier/relaisColis/postRelaisData.php",
-				data: "id_cart="+id_cart+"&tntRCSelectedCode="+response+"&tntRCSelectedNom="+oRelais[1]+"&tntRCSelectedAdresse="+oRelais[4]+"&tntRCSelectedCodePostal="+oRelais[2]+"&tntRCSelectedCommune="+oRelais[3]
-			});
+			if (jData.length && data.responseText === 'ko') {
+				oRelais = jData[0];
+				$.ajax({
+					type: "POST",
+					url: baseDir + "modules/tntcarrier/relaisColis/postRelaisData.php",
+					data: "id_cart="+id_cart+"&tntRCSelectedCode="+oRelais[0]+"&tntRCSelectedNom="+oRelais[1]+"&tntRCSelectedAdresse="+oRelais[4]+"&tntRCSelectedCodePostal="+oRelais[2]+"&tntRCSelectedCommune="+oRelais[3]
+				});
+			}
 		}
 	});
-
 }
 
 function listeCommunes(tabCommunes)
@@ -311,7 +351,7 @@ function erreurListeCommunes() {
 }
 
 function erreurListeRelais() {
-$("#relaisColisResponse").html("Erreur");
+	$("#relaisColisResponse").html("Aucun Relais Colis trouv&eacute; pour cette location");
 }
 
 /************************************************************************************************
@@ -352,10 +392,10 @@ var infowindow;
 
 var relaisMarkers = [];
 var iconRelais = new google.maps.MarkerImage(
-		baseDir+"/modules/tntcarrier/img/google/relaisColis.png",
-		new google.maps.Size(40, 30),
-		new google.maps.Point(0, 0),
-		new google.maps.Point(20, 30))
+	baseDir+"/modules/tntcarrier/img/google/relaisColis.png",
+	new google.maps.Size(40, 30),
+	new google.maps.Point(0, 0),
+	new google.maps.Point(20, 30));
 
 //Limites de la France
 var allowedBounds = new google.maps.LatLngBounds(
@@ -422,7 +462,7 @@ function setInfoMarker(codeRelais, nomRelais, adresse, codePostal, commune, mess
 	}
 	htmlHoraires = htmlHoraires + "</table>";
 
-	adresse_pointclic = [adresse, "|", codePostal, " ", commune].join('');
+	Adresse_pointclic = [adresse, "|", codePostal, " ", commune].join('');
 
 	var contentString = [
          '<div id="tabs" style="width:340px;">',

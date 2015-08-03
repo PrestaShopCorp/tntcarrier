@@ -50,15 +50,15 @@ $().ready(function()
 				if(option_carrier[indexTab].length > 1)
 				{
 					if (option_carrier[indexTab].charAt(1) == 'Z')
-						$("#id_carrier"+$(this).val()).parent().parent().children(".carrier_infos").append("<br/><span onclick=\'displayHelpCarrier(\"http://www.tnt.fr/BtoC/page_domicile.html\")\' style=\'font-style:italic;cursor:pointer;color:blue;text-decoration:underline\'>+ d\'infos</span>");
+						$("#id_carrier"+$(this).val()).parent().parent().children(".carrier_infos").append("<br/><span onclick=\'displayHelpCarrier(\"https://www.tnt.fr/BtoC/page_domicile.html\")\' style=\'font-style:italic;cursor:pointer;color:blue;text-decoration:underline\'>+ d\'infos</span>");
 					else if (option_carrier[indexTab].charAt(1) == 'D')
-						$("#id_carrier"+$(this).val()).parent().parent().children(".carrier_infos").append("<br/><span onclick=\'displayHelpCarrier(\"http://www.tnt.fr/BtoC/page_relais-colis.html\")\' style=\'font-style:italic;cursor:pointer;color:blue;text-decoration:underline\'>+ d\'infos</span>");
+						$("#id_carrier"+$(this).val()).parent().parent().children(".carrier_infos").append("<br/><span onclick=\'displayHelpCarrier(\"https://www.tnt.fr/BtoC/page_relais-colis.html\")\' style=\'font-style:italic;cursor:pointer;color:blue;text-decoration:underline\'>+ d\'infos</span>");
 
 					else
-						$("#id_carrier"+$(this).val()).parent().parent().children(".carrier_infos").append("<br/><span onclick=\'displayHelpCarrier(\"http://www.tnt.fr/BtoC/page_popup.html\")\' style=\'font-style:italic;cursor:pointer;color:blue;text-decoration:underline\'>+ d\'infos</span>");
+						$("#id_carrier"+$(this).val()).parent().parent().children(".carrier_infos").append("<br/><span onclick=\'displayHelpCarrier(\"https://www.tnt.fr/BtoC/page_popup.html\")\' style=\'font-style:italic;cursor:pointer;color:blue;text-decoration:underline\'>+ d\'infos</span>");
 				}
 				else
-					$("#id_carrier"+$(this).val()).parent().parent().children(".carrier_infos").append("<br/><span onclick=\'displayHelpCarrier(\"http://www.tnt.fr/BtoC/page_popup.html\")\' style=\'font-style:italic;cursor:pointer;color:blue;text-decoration:underline\'>+ d\'infos</span>");
+					$("#id_carrier"+$(this).val()).parent().parent().children(".carrier_infos").append("<br/><span onclick=\'displayHelpCarrier(\"https://www.tnt.fr/BtoC/page_popup.html\")\' style=\'font-style:italic;cursor:pointer;color:blue;text-decoration:underline\'>+ d\'infos</span>");
 			}
 		});
 });
@@ -97,7 +97,7 @@ function displayNewTable(response, id)
     tntRCInitMap();
     tntRCgetCommunes();
 }
-		
+
 {/literal}
 {else}
 {literal}
@@ -113,19 +113,19 @@ function displayNewTable(response, id)
 				if(option_carrier[indexTab].length > 1)
 				{
 					if (option_carrier[indexTab].charAt(1) == 'Z')
-						$("[for='"+$(this).attr('id')+"'] .delivery_option_logo").append(" <span id=\'tnt_popup\' onclick=\'displayHelpCarrier(\"http://www.tnt.fr/BtoC/page_domicile.html\");return false;\' style=\'font-style:italic;cursor:pointer;color:blue;text-decoration:underline\'>+ d\'infos</span>");
+						$("[for='"+$(this).attr('id')+"'] .delivery_option_logo").append(" <span id=\'tnt_popup\' onclick=\'displayHelpCarrier(\"https://www.tnt.fr/BtoC/page_domicile.html\");return false;\' style=\'font-style:italic;cursor:pointer;color:blue;text-decoration:underline\'>+ d\'infos</span>");
 					else if (option_carrier[indexTab].charAt(1) == 'D')
-						$("[for='"+$(this).attr('id')+"'] .delivery_option_logo").append(" <span id=\'tnt_popup"+id_array[0]+"\' onclick=\'displayHelpCarrier(\"http://www.tnt.fr/BtoC/page_relais-colis.html\");return false;\' style=\'font-style:italic;cursor:pointer;color:blue;text-decoration:underline\'>+ d\'infos</span>");
+						$("[for='"+$(this).attr('id')+"'] .delivery_option_logo").append(" <span id=\'tnt_popup"+id_array[0]+"\' onclick=\'displayHelpCarrier(\"https://www.tnt.fr/BtoC/page_relais-colis.html\");return false;\' style=\'font-style:italic;cursor:pointer;color:blue;text-decoration:underline\'>+ d\'infos</span>");
 					else
-						$("[for='"+$(this).attr('id')+"'] .delivery_option_logo").append(" <span id=\'tnt_popup"+id_array[0]+"\' onclick=\'displayHelpCarrier(\"http://www.tnt.fr/BtoC/page_popup.html\");return false;\' style=\'font-style:italic;cursor:pointer;color:blue;text-decoration:underline\'>+ d\'infos</span>");
+						$("[for='"+$(this).attr('id')+"'] .delivery_option_logo").append(" <span id=\'tnt_popup"+id_array[0]+"\' onclick=\'displayHelpCarrier(\"https://www.tnt.fr/BtoC/page_popup.html\");return false;\' style=\'font-style:italic;cursor:pointer;color:blue;text-decoration:underline\'>+ d\'infos</span>");
 				}
 				else
-					$("[for='"+$(this).attr('id')+"'] .delivery_option_logo").append(" <span id=\'tnt_popup"+id_array[0]+"\' onclick=\'displayHelpCarrier(\"http://www.tnt.fr/BtoC/page_popup.html\");return false;\' style=\'font-style:italic;cursor:pointer;color:blue;text-decoration:underline\'>+ d\'infos</span>");
+					$("[for='"+$(this).attr('id')+"'] .delivery_option_logo").append(" <span id=\'tnt_popup"+id_array[0]+"\' onclick=\'displayHelpCarrier(\"https://www.tnt.fr/BtoC/page_popup.html\");return false;\' style=\'font-style:italic;cursor:pointer;color:blue;text-decoration:underline\'>+ d\'infos</span>");
 			}
 		});
 	});
-	
-	
+
+
 	$("input[name='id_carrier']").click(function() {
 		var idcarrier = $(this).val();
 		if (date_carrier[idcarrier] != undefined)
@@ -146,47 +146,67 @@ function displayNewTable(response, id)
 		}
 	});
 
-	
+
 	if ($('.opc-main-block').length == 0) {
 		$("input[name*='delivery_option[']").click(function() {
+			enableProcessCarrier();
 			var id_array = $("input[name*='delivery_option[']:checked").val().split(',');
 			if (document.getElementById("tr_carrier_relais"))
 				$("#tr_carrier_relais").remove();
 			getAjaxRelais(id_array[0]);
 		});
 	}
-	
+
 	function submitFormCmd()
 	{
 		hideNewShowCarrier();
 	}
-	
+
 	function displayHelp()
 	{
+		var help = {link: false, text: false};
+
 		if ($('#moreinformations').length){
 			$('#moreinformations').remove();
 		}
 		$("#HOOK_BEFORECARRIER").after("<div id='moreinformations' style='margin-bottom:10px;'></div>");
-		
-		if ($("#tntRCSelectedType").val() == 'JZ')
-			$("#moreinformations").html("Vous avez s&eacute;lectionn&eacute; la livraison TNT 24h à domicile, pour avoir plus d'informations <span id='tnt_popup' class='button btn'><a href='#' onclick='displayNewHelpCarrier(\"http://www.tnt.fr/BtoC/page_domicile.html\")'>Cliquez-ici</a></span>");
-		else if ($("#tntRCSelectedType").val() == 'JD')
-			$("#moreinformations").html("Vous avez s&eacute;lectionn&eacute; la livraison TNT 24h Relais Colis®, pour avoir plus d'informations <span id='tnt_popup' class='button btn'><a href='#' onclick='displayNewHelpCarrier(\"http://www.tnt.fr/BtoC/page_relais-colis.html\")'>Cliquez-ici</a></span>");
-		else if ($("#tntRCSelectedType").val() == 'J')
-			$("#moreinformations").html("Vous avez s&eacute;lectionn&eacute; la livraison TNT 24h au bureau, pour avoir plus d'informations <span id='tnt_popup' class='button btn'><a href='#' onclick='displayNewHelpCarrier(\"http://www.tnt.fr/BtoC/page_popup.html\")'>Cliquez-ici</a></span>");
+		$("#moreinformations").html("<span id='tnt_popup' class='button btn'><a href='#'>Cliquez-ici</a></span>");
+
+		if ($("#tntRCSelectedType").val() == 'JZ') {
+			help['text'] = "Vous avez s&eacute;lectionn&eacute; la livraison TNT 24h à domicile, pour avoir plus d'informations ";
+			help['link'] = "https://www.tnt.fr/BtoC/page_domicile.html"
+		}
+		else if ($("#tntRCSelectedType").val() == 'JD') {
+			help['text'] = "Vous avez s&eacute;lectionn&eacute; la livraison TNT 24h Relais Colis®, pour avoir plus d'informations ";
+			help['link'] = "https://www.tnt.fr/BtoC/page_relais-colis.html";
+		}
+		else if ($("#tntRCSelectedType").val() == 'J') {
+			help['text'] = "Vous avez s&eacute;lectionn&eacute; la livraison TNT 24h au bureau, pour avoir plus d'informations ";
+			help['link'] = "https://www.tnt.fr/BtoC/page_popup.html";
+		}
+
+		if (help['text'] !== false && help['link'] !== false) {
+			$("#moreinformations").html(help['text'] + "<span id='tnt_popup' class='button btn'><a href='#'>Cliquez-ici</a></span>");
+			$("#tnt_popup").click(function() {
+				displayNewHelpCarrier(help['link']);
+			});
+		}
+		else
+			$('#moreinformations').remove();
+
 	}
-	
+
 	function displayRelais()
 	{
 		$("#extra_carrier").after("<div id='relaisColis' style='margin-bottom:10px;'></div>");
 		$("#relaisColis").html("Relais Colis s&eacute;lectionn&eacute; :<br/>" + $("#tntRCSelectedNom").val() + "<br/>" + $("#tntRCSelectedAdresse").val() + "<br/>" + $("#tntRCSelectedCodePostal").val() + " " + $("#tntRCSelectedCommune").val());
 		$("#extra_carrier").css('display', 'block');
 	}
-	
+
 	function displayNewTable(response, id)
 	{
 		$("#tntShowCarrier").hide();
-		
+
 		if ($('#tntShowCarrier').length){
 			$('#tntShowCarrier').remove();
 		}
@@ -196,7 +216,7 @@ function displayNewTable(response, id)
 		if ($('#relaisColis').length){
 			$('#relaisColis').remove();
 		}
-		$("#page").after("<div id='tntShowCarrier' style='display:none;'><div id='helpCarrierBlock' style='text-align:center;position:relative'><div style='border-radius:10px;width:930px;margin:auto;background-color:white;padding-top:10px;'><span class='button btn' onclick='hideNewShowCarrier()' style='float:right;margin-right:37px;'>{/literal}{l s='Close' mod='tntcarrier'}{literal}</span><br/><div id='tr_carrier_relais' style='width:920px;border:none;margin-top:5px;overflow-x:hidden;overflow-y:auto;'></div><div id='button_carrier_relais' style='padding-top:5px;padding-bottom:10px;'></p><a href='#' class='button btn' onclick='submitFormCmd()'>{/literal}{l s='Valider' mod='tntcarrier'}{literal}</a></div></div></div></div>");
+		$( 'body' ).append("<div id='tntShowCarrier' style='display:none;'><div id='helpCarrierBlock' style='text-align:center;position:relative'><div style='border-radius:10px;width:930px;margin:auto;background-color:white;padding-top:10px;'><span class='button btn' onclick='hideNewShowCarrier(1)' style='float:right;margin-right:37px;'>{/literal}{l s='Close' mod='tntcarrier'}{literal}</span><br/><div id='tr_carrier_relais' style='width:920px;border:none;margin-top:5px;overflow-x:hidden;overflow-y:auto;'></div><div id='button_carrier_relais' style='padding-top:5px;padding-bottom:10px;'></p><a href='#' class='button btn' onclick='submitFormCmd()'>{/literal}{l s='Valider' mod='tntcarrier'}{literal}</a></div></div></div></div>");
 		$("#tntShowCarrier").css('height', ($(document).height())+'px');
 		$("#tntShowCarrier").css('width', $(document).width()+'px');
 		$("#tntShowCarrier").css('background', 'url({/literal}{$shop_url}{literal}img/macFFBgHack.png)');
@@ -207,40 +227,41 @@ function displayNewTable(response, id)
 		if ($(window).height() > 500)
 		{
 			var h = ($(window).height() - 720) / 2+'px';
-			
+
 			$("#helpCarrierBlock").css('margin-top', h);
 		}
 		else
 			$("#HelpCarrierBlock").css('margin-top', '20px');
-			
+
 		$("#tr_carrier_relais").html(response);
-		
+
 		$("#tr_carrier_relais").css('padding', '4px');
 		$("#tr_carrier_relais h3").css('margin', '0 -5px');
 		tntRCInitMap();
 		tntRCgetCommunes();
-		
+
 		if ($("#tntRCSelectedType").val() == 'JD' || $('#mobilenumber').length )
 		{
 			$("#tntShowCarrier").css('display','block');
 		}
-		
+
 		var htr = 505;
-		
+
 		if($("#tr_carrier_relais").height() < htr)
 			htr = $("#tr_carrier_relais").height() + 20;
 
 		$("#tr_carrier_relais").css('height', htr+'px');
-		
-		google.maps.event.trigger(map, 'resize');
-		
+
 		displayHelp();
+		if ($("#tntRCSelectedType").val() == 'JD')
+			google.maps.event.trigger(map, 'resize');
+
 	}
-	
+
 	function displayNewHelpCarrier(src)
 	{
 		$('#tntHelpCarrier').remove();
-		$("#page").after("<div id='tntHelpCarrier'><div id='helpCarrierBlock' style='text-align:center;position:relative'><div style='width:930px;margin:auto;background-color:white;border-radius:10px;'><span class='button btn' onclick='hideNewHelpCarrier()' style='float:right;margin-right:37px;'>{/literal}{l s='Close' mod='tntcarrier'}{literal}</span><br/><iframe id='helpCarrierFrame' style='height:500px;width:900px;border:none;margin-top:5px;overflow-x:hidden;overflow-y: scroll;'></iframe></div></div></div>");
+		$( 'body' ).append("<div id='tntHelpCarrier'><div id='helpCarrierBlock' style='text-align:center;position:relative'><div style='width:930px;margin:auto;background-color:white;border-radius:10px;'><span class='button btn' onclick='hideNewHelpCarrier()' style='float:right;margin-right:37px;'>{/literal}{l s='Close' mod='tntcarrier'}{literal}</span><br/><iframe id='helpCarrierFrame' style='height:500px;width:900px;border:none;margin-top:5px;overflow-x:hidden;overflow-y: scroll;'></iframe></div></div></div>");
 		$("#tntHelpCarrier").css('height', $(document).height()+'px');
 		$("#tntHelpCarrier").css('width', $(document).width()+'px');
 		$("#tntHelpCarrier").css('background', 'url({/literal}{$shop_url}{literal}img/macFFBgHack.png)');
@@ -252,38 +273,69 @@ function displayNewTable(response, id)
 		if ($(window).height() > 500)
 		{
 			var h = ($(window).height() - 520) / 2+'px';
-			
+
 			$("#helpCarrierBlock").css('margin-top', h);
 		}
 		else
 			$("#HelpCarrierBlock").css('margin-top', '20px');
 	}
-	
-	
-	
-	function hideNewShowCarrier()
+
+	function unselectCarrier()
 	{
-		if($("#tntRCSelectedNom").val() == "")
+		$('input[name^=delivery_option]:checked').parent().removeClass('checked');
+		$('button[name=processCarrier]').addClass('disabled');
+	}
+
+	function enableProcessCarrier()
+	{
+		$('button[name=processCarrier]').removeClass('disabled');
+	}
+
+
+	function hideNewShowCarrier(close)
+	{
+		close = typeof close !== 'undefined' ? close : false;
+
+		if($("#tntRCSelectedType").val() == 'JD' && !$('[name=tntRCchoixRelais]:checked').length)
 		{
-			alert('Vous devez choisir un relais colis !');
+
+			if (close)
+			{
+				unselectCarrier();
+				$("#tntShowCarrier").hide();
+				displayHelp();
+				if ($("#tntRCSelectedType").val() == 'JD')
+					displayRelais();
+			}
+			else
+			{
+				tntRCgetRelaisColis();
+			}
 		}
 		else if($('#mobilenumber').length && $('#mobileTnt').val().length < 10)
 		{
-			alert('Veuillez saisir un numéro de téléphone portable !');
+			if (close)
+			{
+				unselectCarrier();
+				$("#tntShowCarrier").hide();
+				displayHelp();
+				if ($("#tntRCSelectedType").val() == 'JD')
+					displayRelais();
+			}
+			else
+				alert('Veuillez saisir un numéro de téléphone portable !');
 		}
 		else
 		{
 			$("#tntShowCarrier").hide();
-			displayHelp(); 
+			displayHelp();
 			if ($("#tntRCSelectedType").val() == 'JD')
 			{
 				displayRelais();
 			}
 		}
-		
-		
 	}
-	
+
 	function hideNewHelpCarrier()
 	{
 		$("#tntHelpCarrier").hide();
@@ -295,10 +347,10 @@ function displayNewTable(response, id)
 	{
 		$.get(
 			"{/literal}{$shop_url}{literal}/modules/tntcarrier/relaisColis.php?id_carrier="+id+"&idcart="+$("#cartRelaisColis").val(),
-			function(response, status, xhr) 
+			function(response, status, xhr)
 			{
-				
-				if (status == "error") 
+
+				if (status == "error")
 					$("#tr_carrier_relais").html(xhr.status + " " + xhr.statusText);
 				$("#loadingRelais"+id).hide();
 				if (status == 'success' && response != '' && response != 'none')
@@ -308,7 +360,7 @@ function displayNewTable(response, id)
 			}
 		);
 	}
-	
+
 	function displayHelpCarrier(src)
 	{
 		$("#tntHelpCarrier").css('height', $(document).height()+'px');
@@ -317,7 +369,7 @@ function displayNewTable(response, id)
 		if ($(window).height() > 500)
 		{
 			var h = ($(window).height() - 520) / 2+'px';
-			
+
 			$("#helpCarrierBlock").css('margin-top', h);
 		}
 		else
@@ -325,18 +377,18 @@ function displayNewTable(response, id)
 		$(".opc-main-block").css('position', 'static');
 		$("#tntHelpCarrier").show();
 	}
-	
+
 	function hideHelpCarrier()
 	{
 		$("#tntHelpCarrier").hide();
 		$(".opc-main-block").css('position', 'relative');
 	}
-	
+
 	function selectCities(token)
 	{
 		$.get(
 			"{/literal}{$shop_url}{literal}/modules/tntcarrier/changeCity.php?city="+$("#citiesGuide").val()+"&id="+$("#cartRelaisColis").val()+"&token="+token,
-			function(response, status, xhr) 
+			function(response, status, xhr)
 			{
 				if (status == 'success' && response != 'none')
 				{
@@ -353,7 +405,7 @@ function displayNewTable(response, id)
 <div id="tntHelpCarrier" style="display:none;position:absolute;width:100%;top:0px;left:0px;background:url('{$shop_url}img/macFFBgHack.png');z-index:10000">
 	<div id="helpCarrierBlock" style="text-align:center;position:relative">
 		<div style="width:720px;margin:auto;background-color:white">
-		<span style="cursor:pointer;color:blue;text-decoration:underline;" onclick="hideHelpCarrier()">{l s='Close' mod='tntcarrier'}</span><br/>
+		<span style="cursor:pointer;color:blue;text-decoration:underline;" onclick="hideHelpCarrier(1)">{l s='Close' mod='tntcarrier'}</span><br/>
 		<iframe id="helpCarrierFrame" style="height:500px;width:700px;border:none;margin-top:5px">
 		</iframe>
 		</div>
