@@ -1,5 +1,5 @@
 {*
-* 2007-2015 PrestaShop
+* 2007-2014 PrestaShop
 *
 * NOTICE OF LICENSE
 *
@@ -18,7 +18,7 @@
 * needs please refer to http://www.prestashop.com for more information.
 *
 *  @author PrestaShop SA <contact@prestashop.com>
-*  @copyright  2007-2015 PrestaShop SA
+*  @copyright  2007-2014 PrestaShop SA
 *  @license    http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 *  International Registered Trademark & Property of PrestaShop SA
 *}
@@ -34,5 +34,18 @@
 			<label>{l s='Number account' mod='tntcarrier'} : </label>
 			<div class="margin-form"><input type="text" size="20" name="tnt_carrier_number_account" value="{$varAccount.account|escape:'htmlall'}" /></div>
 		</fieldset>
-	<div class="margin-form"><input class="button" name="submitSave" type="submit" value="{l s='save' mod='tntcarrier'}"></div>
-</form>
+		<div class="margin-form">
+			<input class="button" name="submitSave" type="submit" value="{l s='save' mod='tntcarrier'}"/>
+			{if !isset($account_set) || $account_set === true}
+				<input style="width: 6%" id="next_btn1" class="button" name="next" onclick="" value="{l s='next' mod='tntcarrier'}"/>
+			{/if}
+		</div>
+	</form>
+	<script type="text/javascript">
+	$("#next_btn1").click(function () {
+		$(".menuTabButton.selected").removeClass("selected");
+		$("#menuTab2").addClass("selected");
+		$(".tabItem.selected").removeClass("selected");
+		$("#menuTab2Sheet").addClass("selected");
+	});
+	</script>

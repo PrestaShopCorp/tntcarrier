@@ -11,16 +11,16 @@
 
 h3.descr{
 	color:black;
-	font-size: 18px; 
+	font-size: 18px;
 }
 
 #tntcp{
 	 text-align:left;
 	 padding-bottom:10px;
-} 
+}
 
 .choixrelais{
-	font-size: 13px; 
+	font-size: 13px;
 }
 input.tntRCInput, input.tntRCInputCP
 {
@@ -44,7 +44,7 @@ div.tntchoixCP label
 
 #relaisColisResponse
 {
-	width:450px;
+	width:50%;
 	float:left;
 	font-size:12px;
 }
